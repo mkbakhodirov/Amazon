@@ -5,5 +5,6 @@ public class Main {
                 "Allohumma solli wa sallim ala Muhammad wa ala alihi wa ashabihi ajmain");
 
         System.out.println("Assalamu alekum ahli github1");
+        System.out.println("TZ is a must");
     }
 }
