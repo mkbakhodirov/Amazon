@@ -4,6 +4,6 @@ public class Main {
         System.out.println("Muzaffar nima deb yozay a??? ....." +
                 "Allohumma solli wa sallim ala Muhammad wa ala alihi wa ashabihi ajmain");
 
-        System.out.println("Assalamu alekum ahli github");
+        System.out.println("Assalamu alekum ahli github1");
     }
 }
