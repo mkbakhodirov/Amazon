@@ -6,5 +6,6 @@ public class Main {
 
         System.out.println("Assalamu alekum ahli github1");
         System.out.println("TZ is a must");
+        System.out.println("wergfdg");
     }
 }
