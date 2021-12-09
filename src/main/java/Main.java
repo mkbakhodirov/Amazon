@@ -1,9 +1,8 @@
-import model.user.User;
-import model.user.UserRole;
+import ui.HomeUI;
 
 public class Main {
 
     public static void main(String[] args) {
-
+        HomeUI.home();
     }
 }
