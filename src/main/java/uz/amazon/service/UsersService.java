@@ -1,6 +1,7 @@
 package uz.amazon.service;
+
+import model.user.User;
 import service.base.BaseService;
-import uz.amazon.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +18,6 @@ public class UsersService implements BaseService<User, User, List<User>> {
     public String remove(User user) {
         user.setActive(false);
     }
-
-public class UsersService {
 
     @Override
     public String edit(User user) {
