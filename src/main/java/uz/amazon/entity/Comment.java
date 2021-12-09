@@ -1,4 +1,4 @@
-package comment;
+package uz.amazon.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

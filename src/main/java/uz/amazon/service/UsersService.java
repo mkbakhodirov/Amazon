@@ -1,4 +1,4 @@
-package service;
+package uz.amazon.service;
 
 public class UsersService {
 

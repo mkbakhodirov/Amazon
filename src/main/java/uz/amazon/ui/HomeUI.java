@@ -1,9 +1,9 @@
-package ui;
+package uz.amazon.ui;
 
 
-import model.user.User;
-import response.Response;
-import service.UsersService;
+import uz.amazon.entity.User;
+import uz.amazon.response.Response;
+import uz.amazon.service.UsersService;
 
 import java.util.Scanner;
 

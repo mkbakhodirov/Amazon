@@ -1,4 +1,4 @@
-package model.user;
+package uz.amazon.enums;
 
 public enum UserRole {
     ADMIN,

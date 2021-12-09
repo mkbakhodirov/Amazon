@@ -1,10 +1,12 @@
-package model.user;
+package uz.amazon.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import model.base.BaseModel;
+import uz.amazon.abstractEntity.BaseModel;
+import uz.amazon.enums.UserRole;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -13,4 +15,5 @@ public class User extends BaseModel {
     private UserRole role;
     private String phoneNumber;
     private String password;
+    private String username;
 }
