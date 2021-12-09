@@ -9,7 +9,6 @@ public interface BaseService<T, S, L> extends Response {
     String edit(T t);
     T get(String str1, String str2);
     T getByIndex(int index);
-    T get(S s);
     L getList(S s);
     L getList();
     boolean check(String str1);
