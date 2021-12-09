@@ -12,5 +12,5 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class BaseHistory extends BaseModel {
-    protected UUID userId;
+    protected UUID Id;
 }
