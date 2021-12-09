@@ -1,8 +1,7 @@
-package uz.amazon.service;
+package service;
 
-
+import model.user.User;
 import service.base.BaseService;
-import uz.amazon.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +10,15 @@ public class UsersService implements BaseService<User, User, List<User>> {
     private List<User> users = new ArrayList<>();
 
     @Override
-    public void add(User user) {
+    public String add(User user) {
         users.add(user);
+        return SUCCESS;
     }
 
     @Override
-    public void remove(User user) {
+    public String remove(User user) {
         user.setActive(false);
+        return SUCCESS;
     }
 
     @Override
@@ -27,15 +28,7 @@ public class UsersService implements BaseService<User, User, List<User>> {
 
     @Override
     public User get(String str1, String str2) {
-        for (User user : users) {
-            if (user.isActive()) {
-                try {
-                    if (user.getPhoneNumber().equals(str1));
-                } finally {
-
-                }
-            }
-        }
+        return null;
     }
 
     @Override

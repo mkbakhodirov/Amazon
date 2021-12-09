@@ -1,10 +1,11 @@
 package service.base;
 
-import response.Response;
+
+import model.response.Response;
 
 public interface BaseService<T, S, L> extends Response {
-    void add(T t);
-    void remove(T t);
+    String add(T t);
+    String remove(T t);
     String edit(T t);
     T get(String str1, String str2);
     T getByIndex(int index);
