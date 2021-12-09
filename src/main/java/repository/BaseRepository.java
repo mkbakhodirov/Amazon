@@ -1,7 +1,6 @@
 package repository;
 
 import response.Response;
-import uz.pdp.response.Response;
 
 public interface BaseRepository<T, S, M> extends Response {
     String  add(T t, M m);
