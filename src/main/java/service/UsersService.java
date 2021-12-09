@@ -37,11 +37,6 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     @Override
-    public User get(User user) {
-        return null;
-    }
-
-    @Override
     public List<User> getList(User user) {
         return null;
     }
