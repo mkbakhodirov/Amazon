@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class Amount {
     private double discount;
     private double balance;
