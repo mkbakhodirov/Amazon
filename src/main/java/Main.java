@@ -1,4 +1,4 @@
-import ui.HomeUI;
+import uz.amazon.ui.HomeUI;
 
 public class Main {
 

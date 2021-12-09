@@ -1,4 +1,4 @@
-package model.history;
+package uz.amazon.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,14 +7,12 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class HistoryShop extends BaseHistory {
-    private UUID userId;
+@NoArgsConstructor
+public class Comment {
     private UUID productId;
-    private double price;
-    private int amount;
+    private UUID userId;
+    private UUID parentId;
 }

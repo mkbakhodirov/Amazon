@@ -1,4 +1,4 @@
-package response;
+package uz.amazon.response;
 
 public interface Response {
     String SUCCESS = "SUCCESS";
