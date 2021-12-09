@@ -1,6 +1,7 @@
 package service.base;
 
-import response.Response;
+
+import model.response.Response;
 
 public interface BaseService<T, S, L> extends Response {
     String add(T t);

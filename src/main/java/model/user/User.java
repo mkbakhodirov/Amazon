@@ -1,11 +1,10 @@
-package uz.amazon.entity;
+package model.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import uz.amazon.abstractEntity.BaseModel;
-import uz.amazon.enums.UserRole;
+import model.base.BaseModel;
 
 @Data
 @NoArgsConstructor
