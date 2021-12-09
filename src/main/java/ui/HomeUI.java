@@ -57,7 +57,7 @@ public class HomeUI implements Response {
         }
     }
 
-    public static void register(User user, UserService userService) {
+    public static void register(User user, UsersService userService) {
         String password = "";
         boolean pass = false;
         while (!pass) {
@@ -84,7 +84,7 @@ public class HomeUI implements Response {
     }
 
 
-    public static void userUI(User user, UserService userService) {
+    public static void userUI(User user, UsersService userService) {
         if (userService.checkPassword(user) == null)
             System.out.println(NOT_FOUND);
         else {

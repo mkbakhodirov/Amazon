@@ -10,9 +10,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class BaseModel {
-    private final UUID id;
-    String name;
-
+    protected final UUID id;
+    protected String name;
 
     {
         id = UUID.randomUUID();
