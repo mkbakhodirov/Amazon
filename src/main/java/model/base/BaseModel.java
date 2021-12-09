@@ -22,10 +22,9 @@ public abstract class BaseModel {
         id = UUID.randomUUID();
     }
 
-    public BaseModel(String name, Date createdAt, Date updatedAt) {
+    public BaseModel(String name) {
         this.name = name;
         this.isActive = true;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = new Date();
     }
 }
