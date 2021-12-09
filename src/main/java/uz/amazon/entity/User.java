@@ -15,4 +15,5 @@ public class User extends BaseModel {
     private UserRole role;
     private String phoneNumber;
     private String password;
+    private String username;
 }
