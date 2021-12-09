@@ -13,7 +13,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryShop extends BaseHistory {
-    private UUID userId;
     private UUID productId;
     private double price;
     private int amount;
