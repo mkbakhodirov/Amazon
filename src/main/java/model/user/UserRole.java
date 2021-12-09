@@ -2,7 +2,7 @@ package model.user;
 
 public enum UserRole {
     ADMIN,
-    SUPERADMIN,
+    SUPER_ADMIN,
     USER,
     SHOP
 }
