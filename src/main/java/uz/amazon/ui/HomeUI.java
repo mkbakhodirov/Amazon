@@ -27,7 +27,7 @@ public class HomeUI implements Response {
                     check();
                     break;
                 case 2:
-                    AdminUI();
+//                    AdminUI();
                     break;
                 case 0:
                     home = false;
@@ -49,13 +49,13 @@ public class HomeUI implements Response {
             System.out.println(INVALID_PHONE);
         } else {
             user.setPhoneNumber(replaced);
-            if (userService.check(user) != null)
+//            if (userService.check(user) != null)
                 userUI(user, userService);
-            else {
+//            else {
                 register(user, userService);
             }
         }
-    }
+//    }
 
     public static void register(User user, UsersService userService) {
         String password = "";
@@ -77,7 +77,7 @@ public class HomeUI implements Response {
         user.setPassword(password);
         System.out.println(ENTER_NAME);
         user.setName(scannerStr.nextLine());
-        userService.add(user);
+//        userService.add(user);
         System.out.println(SUCCESS);
         System.out.println("\n" + CAN_LOGIN + "\n\n");
 
@@ -85,9 +85,9 @@ public class HomeUI implements Response {
 
 
     public static void userUI(User user, UsersService userService) {
-        if (userService.checkPassword(user) == null)
+//        if (userService.checkPassword(user) == null)
             System.out.println(NOT_FOUND);
-        else {
+//        else {
             boolean isActive = true;
             while (isActive) {
                 System.out.println("""
@@ -120,8 +120,8 @@ public class HomeUI implements Response {
         }
     }
 
-    public static void AdminUI() {
-
-    }
-
-}
+//    public static void AdminUI() {
+//
+//    }
+//
+//}
