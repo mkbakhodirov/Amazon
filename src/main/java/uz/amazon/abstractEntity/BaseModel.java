@@ -1,4 +1,4 @@
-package model.base;
+package uz.amazon.abstractEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

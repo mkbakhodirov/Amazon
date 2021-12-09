@@ -1,4 +1,4 @@
-package comment;
+package uz.amazon.abstractEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-@EqualsAndHashCode()
+@EqualsAndHashCode(callSuper = true)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Comment {
-    private UUID productId;
-    private UUID userId;
-    private UUID parentId;
+@AllArgsConstructor
+public abstract class BaseHistory extends BaseModel {
+    protected UUID userId;
 }

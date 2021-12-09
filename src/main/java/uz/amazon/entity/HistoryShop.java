@@ -1,10 +1,10 @@
-package model.wish;
+package uz.amazon.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import model.base.BaseModel;
+import uz.amazon.abstractEntity.BaseHistory;
 
 import java.util.UUID;
 
@@ -13,7 +13,9 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Wish extends BaseModel {
+public class HistoryShop extends BaseHistory {
     private UUID userId;
     private UUID productId;
+    private double price;
+    private int amount;
 }

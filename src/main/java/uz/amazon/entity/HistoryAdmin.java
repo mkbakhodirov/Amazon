@@ -1,4 +1,6 @@
-package model.history;
+package uz.amazon.entity;
+
+import uz.amazon.abstractEntity.BaseHistory;
 
 
 import lombok.AllArgsConstructor;

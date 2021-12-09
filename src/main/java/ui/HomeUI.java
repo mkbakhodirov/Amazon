@@ -1,7 +1,7 @@
 package ui;
 
 
-import model.user.User;
+import uz.amazon.entity.User;
 import response.Response;
 import service.UsersService;
 
