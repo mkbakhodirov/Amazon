@@ -1,4 +1,4 @@
-package ui;
+package uz.amazon.ui;
 
 public class WelcomeUI {
     public static void enterance() {

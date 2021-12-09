@@ -1,6 +1,6 @@
-package service.base;
+package uz.amazon.service.base;
 
-import response.Response;
+import uz.amazon.response.Response;
 
 public interface BaseService<T, S, L> extends Response {
     String add(T t);
