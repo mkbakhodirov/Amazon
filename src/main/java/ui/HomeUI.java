@@ -8,7 +8,6 @@ import service.UsersService;
 import java.util.Scanner;
 
 public class HomeUI implements Response {
-//   History history = new History();
 
     static Scanner scannerStr = new Scanner(System.in);
     static Scanner scannerInt = new Scanner(System.in);
@@ -27,10 +26,7 @@ public class HomeUI implements Response {
                 case 1:
                     check();
                     break;
-//                case 2:
-//                    userUI();
-//                    break;
-                case 2:
+             case 2:
                     AdminUI();
                     break;
                 case 0:
@@ -89,41 +85,21 @@ public class HomeUI implements Response {
 
 
     public static void userUI(User user, UserService userService) {
-        BookService bookService = new BookService();
-        Book book = new Book();
-        HistoryService historyService = new HistoryService();
         if (userService.checkPassword(user) == null)
             System.out.println(NOT_FOUND);
         else {
             boolean isActive = true;
             while (isActive) {
                 System.out.println("""
-                        1.  Books you have checked
-                        2.  Waiting List
-                        3.  Loan History
-                        4.  Currently  reading
-                        5.  Already read
-                        6.  My notes
-                        7.  My reviews
-                        8.  Borrow a book(up to 10 books in a month)
-                        9.  Buy a book
-                        10. Search a book
-                        11. Donate
-                        12. 
+                        1.
+                        2.  
+                        3.  
+                        4.
+                        5.
                         0.  Exit
                         """);
                 switch (scannerInt.nextInt()) {
                     case 1:
-                        book.setName(scannerStr.nextLine());
-                        Book checkedBook = bookService.check(book);
-                        if (checkedBook == null)
-                            System.out.println(NOT_AVAILABLE);
-                        else {
-                            System.out.println(WANT_TAKE);
-                            if (scannerInt.nextInt() == 1) {
-                                historyService.add(book, user);
-                            }
-                        }
                         break;
                     case 2:
 

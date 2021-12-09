@@ -11,6 +11,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public abstract class BaseModel {
     private final UUID id;
+    String name;
+
 
     {
         id = UUID.randomUUID();

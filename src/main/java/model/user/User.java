@@ -11,5 +11,8 @@ import model.base.BaseModel;
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseModel {
     private UserRole role;
+    String phoneNumber;
+    String password;
+    
 
 }
