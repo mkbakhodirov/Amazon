@@ -1,10 +1,10 @@
-package uz.amazon.entity;
+package model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import uz.amazon.abstractEntity.BaseModel;
+import model.base.BaseModel;
 
 import java.util.UUID;
 

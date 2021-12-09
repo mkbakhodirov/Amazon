@@ -1,4 +1,4 @@
-package uz.amazon.enums;
+package model.payment;
 
 public enum PaymentType {
     CLICK,

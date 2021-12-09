@@ -1,19 +1,18 @@
-package uz.amazon.entity;
+package model.history;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import uz.amazon.abstractEntity.BaseModel;
 
 import java.util.UUID;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
-public class Category extends BaseModel {
-
-    private UUID parentId;
-
+public class HistoryAdmin extends BaseHistory {
+    private UUID productId;
+    private double price;
+    private int amount;
 }

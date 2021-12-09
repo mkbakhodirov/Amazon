@@ -1,4 +1,4 @@
-package uz.amazon.abstractEntity;
+package model.base;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = false)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public abstract class BaseModel {
     protected final UUID id;
@@ -21,5 +20,12 @@ public abstract class BaseModel {
 
     {
         id = UUID.randomUUID();
+    }
+
+    public BaseModel(String name, Date createdAt, Date updatedAt) {
+        this.name = name;
+        this.isActive = true;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

@@ -1,7 +1,7 @@
-package uz.amazon.ui;
+package ui;
 
 public class WelcomeUI {
-    public static void enterance() {
+    public static void entrance() {
         System.out.println("\n");
         System.out.println("W           W           W   E E E E E   L                C C          O O            M           M         E E E E E ");
         System.out.println(" W         W W         W    E           L              C     C       O    O         M M         M M        E         ");
