@@ -77,7 +77,7 @@ public class HomeUI implements Response {
         user.setPassword(password);
         System.out.println(ENTER_NAME);
         user.setName(scannerStr.nextLine());
-        userService.add(user, null);
+        userService.add(user);
         System.out.println(SUCCESS);
         System.out.println("\n" + CAN_LOGIN + "\n\n");
 
