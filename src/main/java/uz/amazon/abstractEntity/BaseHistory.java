@@ -13,4 +13,5 @@ import java.util.UUID;
 @AllArgsConstructor
 public abstract class BaseHistory extends BaseModel {
     protected UUID Id;
+
 }
