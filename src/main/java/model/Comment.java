@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = false)
@@ -14,9 +13,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment {
+    @JacksonXmlProperty(isAttribute = true, localName = "productId")
     private UUID productId;
+    @JacksonXmlProperty(isAttribute = true, localName = "userId")
     private UUID userId;
+    @JacksonXmlProperty(isAttribute = true, localName = "parentId")
     private UUID parentId;
-
-
 }

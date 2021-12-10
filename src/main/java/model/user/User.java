@@ -1,6 +1,6 @@
 package model.user;
 
-import bot.bot_base.botLogic.BotState;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,28 +11,14 @@ import model.base.BaseModel;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+
 public class User extends BaseModel {
+    @JacksonXmlProperty(isAttribute = true, localName = "role")
     private UserRole role;
+    @JacksonXmlProperty(isAttribute = true, localName = "phoneNumber")
     private String phoneNumber;
+    @JacksonXmlProperty(isAttribute = true, localName = "password")
     private String password;
+    @JacksonXmlProperty(isAttribute = true, localName = "username")
     private String username;
-    private double balance;
-    private BotState botState;
-
-    public User(UserRole role, String str, String password) {
-        this.role = role;
-        if (role.equals(UserRole.USER))
-            this.phoneNumber = str;
-        else
-            this.username = str;
-        this.password = password;
-    }
-
-    public User(String name, UserRole role, String phoneNumber, String password, String username) {
-        super(name);
-        this.role = role;
-        this.phoneNumber = phoneNumber;
-        this.password = password;
-        this.username = username;
-    }
 }

@@ -1,10 +1,11 @@
-package model.history;
+package uz.pdp.model.history;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import uz.pdp.model.Product;
+import uz.pdp.model.base.BaseModel;
 
 import java.util.UUID;
 
@@ -12,10 +13,13 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class HistoryUser extends BaseHistory {
-    private String productName;
-    private String shopName;
+
+public abstract class BaseHistory extends BaseModel {
+
     private double price;
     private int amount;
+    private UUID productId;
     private UUID userId;
+    private UUID paymentId;
+
 }

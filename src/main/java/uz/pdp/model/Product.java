@@ -17,17 +17,19 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Product extends BaseModel {
-    private double price;
-    private int amount;
-    private UUID shopId;
-    private UUID categoryId;
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JacksonXmlRootElement(localName = "product")
 
-    public Product(String name, double price, int amount, UUID shopId, UUID categoryId) {
-        super(name);
-        this.price = price;
-        this.amount = amount;
-        this.shopId = shopId;
-        this.categoryId = categoryId;
-    }
+public class Product extends BaseModel {
+    @JacksonXmlProperty(isAttribute = true, localName = "price")
+    private double price;
+    @JacksonXmlProperty(isAttribute = true, localName = "amount")
+    private int amount;
+    @JacksonXmlProperty(isAttribute = true, localName = "shopId")
+    private UUID shopId;
+    @JacksonXmlProperty(isAttribute = true, localName = "categoryId")
+    private UUID categoryId;
+    @JacksonXmlProperty(isAttribute = true, localName = "deliveryDate")
+    private Date deliveryDate;
+
 }

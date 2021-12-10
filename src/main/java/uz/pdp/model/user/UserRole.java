@@ -1,8 +1,8 @@
-package model.user;
+package uz.pdp.model.user;
 
 public enum UserRole {
     ADMIN,
-    SUPER_ADMIN,
+    AMAZON,
     USER,
     SHOP
 }

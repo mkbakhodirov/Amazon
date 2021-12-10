@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import model.base.BaseModel;
 
 import java.util.UUID;
 
@@ -13,8 +12,11 @@ import java.util.UUID;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class BaseHistory extends BaseModel {
-    @JacksonXmlProperty(isAttribute = true, localName = "Id")
-    protected UUID Id;
-
+public class HistoryAdmin extends BaseHistory {
+    @JacksonXmlProperty(isAttribute = true, localName = "productId")
+    private UUID productId;
+    @JacksonXmlProperty(isAttribute = true, localName = "price")
+    private double price;
+    @JacksonXmlProperty(isAttribute = true, localName = "amount")
+    private int amount;
 }

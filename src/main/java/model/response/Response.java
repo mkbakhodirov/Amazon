@@ -4,6 +4,7 @@ public interface Response {
     String SUCCESS = "SUCCESS";
     String CAN_LOGIN = "================ YOU = CAN = LOGIN = NOW ================";
     String NOT_FOUND = "NOT FOUND";
+    String TAKEN = "THIS BOOK IS TAKEN";
     String AVAILABLE = "AVAILABLE";
     String NOT_AVAILABLE = "NOT AVAILABLE";
     String PHONE_BEGINNING = "+998 ";
@@ -18,15 +19,10 @@ public interface Response {
     String WELCOME = "WELCOME";
     String SELECT = "******SELECT******";
     String INVALID_COMMAND = "ENTER VALID COMMAND";
-    String INVALID_PHONE = "THERE IS ALREADY USER WITH THIS PHONE NUMBER";
+    String INVALID_PHONE = "ENTER VALID PHONE NUMBER";
     String NAME_USED = "THIS NAME IS ALREADY USED";
     String ENTER_NAME = "ENTER NAME";
     String PHONE_USED = "THIS PHONE IS ALREADY USED";
     String INCORRECT_NUM_TYPE = "NUMBER TYPR IS INCORRECT";
     String WHO_ARE_YOU = "WHO ARE YOU?";
-    String INVALID_PRODUCT = "THERE IS ALREADY PRODUCT WITH THIS NAME";
-    String INVALID_USERNAME = "THERE IS ALREADY USER WITH THIS USERNAME";
-    String INVALID_CATEGORY = "THERE IS ALREADY CATEGORY WITH THIS NAME";
-    String INCORRECT_ADMIN = "Username or password is incorrect";
-    String EMPTY_LIST = "List is empty";
 }
