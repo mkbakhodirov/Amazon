@@ -8,6 +8,9 @@ import model.user.User;
 import model.user.UserRole;
 import service.ProductsService;
 import service.UsersService;
+import model.user.User;
+import model.user.UserRole;
+import service.ProductsService;
 
 import java.io.File;
 import java.util.Date;
@@ -35,12 +38,11 @@ public class HomeUI implements Response {
         WelcomeUI.entrance();
         boolean stepcode1 = true;
         while (stepcode1) {
-
             System.out.println(SELECT);
             System.out.println("""
                     1. Register
-                    2. LogIn
-                    0. Exit
+                    2.Sign in as Admin
+                    0.Exit
                     """);
             switch (scannerInt.nextInt()){
                 case 1:
