@@ -1,13 +1,14 @@
 package service;
 
+import Database.BaseUrl;
 import model.user.User;
 import service.base.BaseService;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 public class UsersService implements BaseService<User, User, List<User>> {
-    User user = new User();
-    private List<User> users = new ArrayList<>();
+    static File file = new File(BaseUrl.url + "users.json");
 
     @Override
     public String add(User user) {
