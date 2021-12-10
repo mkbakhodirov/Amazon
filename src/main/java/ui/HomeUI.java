@@ -7,6 +7,10 @@ import model.response.Response;
 import model.user.User;
 import model.user.UserRole;
 import service.ProductsService;
+import service.UsersService;
+import model.user.User;
+import model.user.UserRole;
+import service.ProductsService;
 
 import java.io.File;
 import java.util.Date;
@@ -16,6 +20,8 @@ import java.util.Scanner;
 public class HomeUI implements Response {
     static Scanner scannerStr = new Scanner(System.in);
     static Scanner scannerInt = new Scanner(System.in);
+    static UsersService usersService;
+    static User user;
 
     public static void home() throws Exception {
         ProductsService productsService = new ProductsService();
@@ -30,15 +36,15 @@ public class HomeUI implements Response {
         List<Product> products = objectMapper.readValue(file, new TypeReference<List<Product>>() {});
         System.out.println(products.get(0));
         WelcomeUI.entrance();
-        boolean stepcode = true;
-        while (stepcode) {
+        boolean stepcode1 = true;
+        while (stepcode1) {
             System.out.println(SELECT);
             System.out.println("""
-                    1.Sign up
-                    2.Sign in
+                    1. Register
+                    2.Sign in as Admin
                     0.Exit
                     """);
-            switch (scannerInt.nextInt()) {
+            switch (scannerInt.nextInt()){
                 case 1:
                     register();
                     break;
@@ -46,7 +52,7 @@ public class HomeUI implements Response {
                     adminUI();
                     break;
                 case 0:
-                    stepcode = false;
+                    stepcode1 = false;
                     break;
                 default:
                     System.out.println(INVALID_COMMAND);
@@ -55,7 +61,6 @@ public class HomeUI implements Response {
     }
 
     private static void register() {
-        System.out.println(ENTER_PHONE);
 
     }
     private static void adminUI() {

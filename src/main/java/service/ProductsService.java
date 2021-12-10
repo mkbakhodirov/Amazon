@@ -67,9 +67,10 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
     }
 
     @Override
-    public boolean check(String str1) {
-        return false;
+    public Product check(String username, String password) {
+        return null;
     }
+
 
     @Override
     public boolean isEmpty() {

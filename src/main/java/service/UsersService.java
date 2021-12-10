@@ -5,8 +5,8 @@ import service.base.BaseService;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class UsersService implements BaseService<User, User, List<User>> {
+    User user = new User();
     private List<User> users = new ArrayList<>();
 
     @Override
@@ -47,8 +47,8 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     @Override
-    public boolean check(String str1) {
-        return false;
+    public User check(String username, String password) {
+        return user;
     }
 
     @Override

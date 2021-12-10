@@ -11,6 +11,6 @@ public interface BaseService<T, S, L> extends Response {
     T getByIndex(int index);
     L getList(S s);
     L getList();
-    boolean check(String str1);
+    T  check(String username, String password);
     boolean isEmpty();
 }
