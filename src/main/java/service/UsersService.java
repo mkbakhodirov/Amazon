@@ -59,11 +59,6 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     @Override
-    public User get(String str1, String str2) {
-        return null;
-    }
-
-    @Override
     public User getByIndex(int index) {
         return null;
     }
@@ -83,5 +78,19 @@ public class UsersService implements BaseService<User, User, List<User>> {
         return false;
     }
 
-
+    public User get(String str1, String password) {
+        List<User> users = read(file);
+        if (users != null) {
+            for (User user: users) {
+                try {
+                    if (user.getUsername().equals(str1) && user.getPassword().equals(password))
+                        return user;
+                } catch (Exception e) {
+                    if (user.getPhoneNumber().equals(str1) && user.getPassword().equals(password))
+                        return user;
+                }
+            }
+        }
+        return null;
+    }
 }

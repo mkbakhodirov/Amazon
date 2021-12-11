@@ -48,11 +48,6 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
     }
 
     @Override
-    public Product get(String str1, String str2) {
-        return null;
-    }
-
-    @Override
     public Product getByIndex(int index) {
         return null;
     }

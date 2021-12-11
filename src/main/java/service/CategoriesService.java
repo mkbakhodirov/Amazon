@@ -2,9 +2,11 @@ package service;
 
 import Database.BaseUrl;
 import model.Category;
+import model.Product;
 import service.base.BaseService;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoriesService implements BaseService<Category, Category, List<Category>> {
@@ -12,6 +14,17 @@ public class CategoriesService implements BaseService<Category, Category, List<C
 
     @Override
     public String add(Category category) {
+        List<Category> categories = read(file);
+        if (categories == null)
+            categories = new ArrayList<>();
+        int res = check(category, categories);
+        if (res == 1) {
+            categories.add(category);
+            write(file, categories);
+            return SUCCESS;
+        }
+        else if (res == -1)
+            return INVALID_CATEGORY;
         return null;
     }
 
@@ -21,13 +34,15 @@ public class CategoriesService implements BaseService<Category, Category, List<C
     }
 
     @Override
-    public int check(Category category, List<Category> list) {
-        return 0;
-    }
-
-    @Override
-    public Category get(String str1, String str2) {
-        return null;
+    public int check(Category category, List<Category> categories) {
+        String name = category.getName();
+        for (Category category1 : categories) {
+            if (category1.getName().equals(name))
+                return -1;
+            if (category1.equals(category))
+                return 0;
+        }
+        return 1;
     }
 
     @Override
