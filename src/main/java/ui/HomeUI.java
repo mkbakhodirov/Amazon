@@ -18,7 +18,6 @@ public class HomeUI implements Response {
     static Scanner scannerInt = new Scanner(System.in);
 
     public static void home() throws Exception {
-        WelcomeUI.entrance();
         boolean stepcode = true;
         while (stepcode) {
             System.out.println(SELECT);

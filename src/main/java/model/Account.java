@@ -9,21 +9,17 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class Amount {
-    @JacksonXmlProperty(isAttribute = true, localName = "discount")
-    private double discount;
-    @JacksonXmlProperty(isAttribute = true, localName = "balance")
+public class Account {
+    private double discountPercent;
     private double balance;
-    @JacksonXmlProperty(isAttribute = true, localName = "userId")
     private UUID userId;
-    @JacksonXmlProperty(isAttribute = true, localName = "id")
     private final UUID id;
 
     {
         id = UUID.randomUUID();
     }
 
-    public Amount(UUID userId) {
+    public Account(UUID userId) {
         this.userId = userId;
     }
 }
