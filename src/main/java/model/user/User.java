@@ -13,12 +13,8 @@ import model.base.BaseModel;
 @EqualsAndHashCode(callSuper = true)
 
 public class User extends BaseModel {
-    @JacksonXmlProperty(isAttribute = true, localName = "role")
     private UserRole role;
-    @JacksonXmlProperty(isAttribute = true, localName = "phoneNumber")
     private String phoneNumber;
-    @JacksonXmlProperty(isAttribute = true, localName = "password")
     private String password;
-    @JacksonXmlProperty(isAttribute = true, localName = "username")
     private String username;
 }

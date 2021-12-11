@@ -9,7 +9,6 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-//@AllArgsConstructor
 public class Amount {
     @JacksonXmlProperty(isAttribute = true, localName = "discount")
     private double discount;

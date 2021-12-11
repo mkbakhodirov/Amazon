@@ -1,5 +1,6 @@
 package service;
 
+import Database.BaseUrl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -10,39 +11,40 @@ import service.base.BaseService;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 public class ProductsService implements BaseService<Product, Category, List<Product>> {
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "product")
-    private final List<Product> products = new ArrayList<>();
+    static File file = new File(BaseUrl.url + "products.json");
 
     @Override
     public String add(Product product) {
-        products.add(product);
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            File file = new File("C:\\D\\PDP\\Java Backend FAANG\\Amazon\\src\\main\\java\\Database\\users.json");
-            objectMapper.writeValue(file, products);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        List<Product> products = read(file);
+        if (products == null)
+            products = new ArrayList<>();
+        int res = check(product, products);
+        if (res == 1) {
+            products.add(product);
+            write(file, products);
+            return SUCCESS;
         }
-        return SUCCESS;
+        else if (res == -1)
+            return INVALID_PRODUCT;
+        return null;
     }
 
     @Override
     public String remove(Product product) {
-        product.setActive(false);
-        return SUCCESS;
-    }
-
-    @Override
-    public String edit(Product product) {
         return null;
     }
 
     @Override
-    public Product get(String str1, String str2) {
-        return null;
+    public int check(Product product, List<Product> products) {
+        String name = product.getName();
+        for (Product product1 : products) {
+            if (product1.getName().equals(name))
+                return -1;
+            if (product1.equals(product))
+                return 0;
+        }
+        return 1;
     }
 
     @Override
@@ -52,25 +54,13 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
 
     @Override
     public List<Product> getList(Category category) {
-        List<Product> productsOfCategory = new ArrayList<>();
-        UUID categoryId = category.getId();
-        for (Product product : products) {
-            if (product.isActive() && product.getCategoryId().equals(categoryId))
-                productsOfCategory.add(product);
-        }
-        return productsOfCategory;
+        return null;
     }
 
     @Override
     public List<Product> getList() {
         return null;
     }
-
-    @Override
-    public Product check(String username, String password) {
-        return null;
-    }
-
 
     @Override
     public boolean isEmpty() {

@@ -21,15 +21,10 @@ import java.util.UUID;
 @JacksonXmlRootElement(localName = "product")
 
 public class Product extends BaseModel {
-    @JacksonXmlProperty(isAttribute = true, localName = "price")
     private double price;
-    @JacksonXmlProperty(isAttribute = true, localName = "amount")
     private int amount;
-    @JacksonXmlProperty(isAttribute = true, localName = "shopId")
     private UUID shopId;
-    @JacksonXmlProperty(isAttribute = true, localName = "categoryId")
     private UUID categoryId;
-    @JacksonXmlProperty(isAttribute = true, localName = "deliveryDate")
     private Date deliveryDate;
 
 }
