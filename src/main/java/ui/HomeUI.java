@@ -1,7 +1,11 @@
 package ui;
 
-import bot.bot_base.botLogic.MyBot;
+import Database.BaseUrl;
+import bot.MyBot;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Category;
+import model.Product;
 import model.response.Response;
 import model.user.User;
 import model.user.UserRole;
@@ -12,6 +16,8 @@ import service.CategoriesService;
 import service.ProductsService;
 import service.UsersService;
 
+import java.io.File;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -130,11 +136,15 @@ public class HomeUI implements Response {
             System.out.println("""
                     1.Add category
                     2.Remove category
+                    3.See categories
+                    4.See shops
+                    5.Remove shop
                     0.Exit
                     """);
             switch (scannerInt.nextInt()) {
                 case 1 -> addCategory();
-                case 2 -> removeCategory();
+                case 2 -> removeAdmin();
+                case 3 -> seeAdmins();
                 case 0 -> stepcode = false;
                 default -> System.out.println(INVALID_COMMAND);
             }
@@ -188,63 +198,6 @@ public class HomeUI implements Response {
                 if (category.isLastCategory())
                     category.setLastCategory(false);
             }
-        }
-        else if (index1 != 0) {
-            Category category1 = categories.get(index1 - 1);
-            addSubcategory(category1);
-        }
-    }
-
-    private static void removeCategory() {
-        boolean stepCode = true;
-        while (stepCode) {
-            List<Category> categories = categoriesService.getList();
-            int index = 1;
-            System.out.println(SELECT);
-            for (Category category : categories) {
-                System.out.println(index++ + "." + category.getName());
-            }
-            System.out.println(index + ".Remove\t 0.Exit");
-            int index1 = scannerInt.nextInt();
-            if (index1 == index) {
-                System.out.println("Enter index");
-                int index2 = scannerInt.nextInt();
-                Category category = categories.get(index2 - 1);
-                String res = categoriesService.remove(category);
-                if (res != null)
-                    System.out.println(res);
-            }
-            else if (index1 == 0)
-                stepCode = false;
-            else {
-                Category category = categories.get(index1 - 1);
-                addSubcategory(category);
-            }
-        }
-    }
-
-    private static void removeSubcategory(Category category) {
-        List<Category> categories = categoriesService.getList(category);
-        int index = 1;
-        System.out.println(SELECT);
-        for (Category category1 : categories) {
-            System.out.println(index++ + "." + category1.getName());
-        }
-        System.out.println(index + ".Remove\t 0.Exit");
-        int index1 = scannerInt.nextInt();
-        if (index1 == index) {
-            System.out.println("Enter index");
-            int index2 = scannerInt.nextInt();
-            Category category1 = categories.get(index2 - 1);
-            String res = categoriesService.remove(category1);
-            if (res != null)
-                System.out.println(res);
-                List<Category> categoryList = categoriesService.getList(category);
-                for (Category category2 : categoryList) {
-                    if (category2.isActive())
-                        return;
-                }
-                category.setLastCategory(true);
         }
         else if (index1 != 0) {
             Category category1 = categories.get(index1 - 1);

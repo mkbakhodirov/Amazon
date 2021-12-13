@@ -1,10 +1,10 @@
 package service;
 
 import bot.bot_replies.ReplyBot;
+import model.payment.PaymentType;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
@@ -21,7 +21,7 @@ public class MyBotService implements ReplyBot {
 
         for (int i = 0; i < numberOfButtons; i++) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-            inlineKeyboardButton.setText(BUTTON_WORDS[i]);
+            inlineKeyboardButton.setText((i + 1) + "");
             inlineKeyboardButton.setCallbackData(String.valueOf(i));
             inlineKeyboardButtons.add(inlineKeyboardButton);
 
@@ -31,48 +31,6 @@ public class MyBotService implements ReplyBot {
             }
         }
         return inlineKeyboardMarkup;
-    }
-
-    public static ReplyKeyboardMarkup register(){
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-
-        KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add(SIGN_IN);
-        keyboardRow.add(SIGN_UP);
-
-        keyboardRows.add(keyboardRow);
-
-        return replyKeyboardMarkup;
-    }
-
-    public static ReplyKeyboardMarkup getContact(){
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-
-        KeyboardRow keyboardRow = new KeyboardRow();
-        KeyboardButton keyboardButton = new KeyboardButton();
-        KeyboardButton keyboardButton1 = new KeyboardButton();
-        keyboardButton.setText(SHARE_CONTACK);
-        keyboardButton1.setText(BACK);
-
-        keyboardRow.add(keyboardButton);
-        keyboardRow.add(keyboardButton1);
-        keyboardButton.setRequestContact(true);
-
-        keyboardRows.add(keyboardRow);
-
-        return replyKeyboardMarkup;
     }
 
     public static ReplyKeyboardMarkup menu() {
@@ -95,85 +53,62 @@ public class MyBotService implements ReplyBot {
         keyboardRow2.add(WEBPAGE);
         keyboardRow2.add(HISTORY);
 
-        KeyboardRow keyboardRow3 = new KeyboardRow();
-        keyboardRow3.add(PURCHASES);
-
         keyboardRows.add(keyboardRow);
         keyboardRows.add(keyboardRow1);
         keyboardRows.add(keyboardRow2);
-        keyboardRows.add(keyboardRow3);
 
         return replyKeyboardMarkup;
     }
 
-    public static ReplyKeyboardMarkup buymenu() {
-        ReplyKeyboardMarkup replyKeyboardMarkup1 = new ReplyKeyboardMarkup();
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        replyKeyboardMarkup1.setKeyboard(keyboardRows);
+    static CategoriesService categoriesService;
 
-        replyKeyboardMarkup1.setSelective(true);
-        replyKeyboardMarkup1.setOneTimeKeyboard(false);
-        replyKeyboardMarkup1.setResizeKeyboard(true);
+    public static InlineKeyboardMarkup buymenu() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> list = new ArrayList<>();
+        inlineKeyboardMarkup.setKeyboard(list);
 
-        KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add(LAPTOPS);
-        keyboardRow.add(MOBILE);
+        List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
+        if(categoriesService.getList() != null)
+        for (int i = 0; i < categoriesService.getList().size(); i++) {
+            InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+            inlineKeyboardButton.setText(categoriesService.getList().get(i).toString());
+            inlineKeyboardButton.setCallbackData(String.valueOf(i));
+            inlineKeyboardButtons.add(inlineKeyboardButton);
 
-        KeyboardRow keyboardRow1 = new KeyboardRow();
-        keyboardRow1.add(EDIBLES);
-        keyboardRow1.add(BOOKS);
-
-        KeyboardRow keyboardRow2 = new KeyboardRow();
-        keyboardRow2.add(BACK);
-        keyboardRow2.add(CLOTHES);
-
-        keyboardRows.add(keyboardRow);
-        keyboardRows.add(keyboardRow1);
-        keyboardRows.add(keyboardRow2);
-
-        return replyKeyboardMarkup1;
+            if (i + 1 % 3 == 0) {
+                list.add(inlineKeyboardButtons);
+                inlineKeyboardButtons = new ArrayList<>();
+            } else if (i > categoriesService.getList().size() - 3 && inlineKeyboardButtons != null)
+                list.add(inlineKeyboardButtons);
+        }
+        return inlineKeyboardMarkup;
     }
 
-    public static ReplyKeyboardMarkup payType() {
-        ReplyKeyboardMarkup replyKeyboardMarkup1 = new ReplyKeyboardMarkup();
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        replyKeyboardMarkup1.setKeyboard(keyboardRows);
+    public static InlineKeyboardMarkup payType() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> list = new ArrayList<>();
+        inlineKeyboardMarkup.setKeyboard(list);
 
-        replyKeyboardMarkup1.setSelective(true);
-        replyKeyboardMarkup1.setOneTimeKeyboard(false);
-        replyKeyboardMarkup1.setResizeKeyboard(true);
+        List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
 
-        KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add(CLICK);
-        keyboardRow.add(PAY_ME);
+        List<PaymentType> paymentTypeList = new ArrayList<>();
+        paymentTypeList.add(PaymentType.PAY_ME);
+        paymentTypeList.add(PaymentType.VISA);
+        paymentTypeList.add(PaymentType.PAY_PAL);
+        paymentTypeList.add(PaymentType.MASTER_CARD);
+        paymentTypeList.add(PaymentType.CLICK);
+        for (int i = 0; i < paymentTypeList.size(); i++) {
+            InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+            inlineKeyboardButton.setText(paymentTypeList.get(i).toString());
+            inlineKeyboardButton.setCallbackData(String.valueOf(i));
+            inlineKeyboardButtons.add(inlineKeyboardButton);
 
-        KeyboardRow keyboardRow1 = new KeyboardRow();
-        keyboardRow1.add(PAYPAL);
-        keyboardRow1.add(MASTER_CARD);
-
-        KeyboardRow keyboardRow2 = new KeyboardRow();
-        keyboardRow2.add(BACK);
-        keyboardRow2.add(VISA);
-
-        keyboardRows.add(keyboardRow);
-        keyboardRows.add(keyboardRow1);
-        keyboardRows.add(keyboardRow2);
-
-        return replyKeyboardMarkup1;
+            if (i % 2 == 0) {
+                list.add(inlineKeyboardButtons);
+                inlineKeyboardButtons = new ArrayList<>();
+            }  //else if (i > categoriesService.getList().size() - 3 && inlineKeyboardButtons != null)
+               //  list.add(inlineKeyboardButtons);
+        }
+        return inlineKeyboardMarkup;
     }
 }
-  //if(message.hasContact()){
-//    Contact contact = message.getConact();
-//    SendMessage sndmss = new SendMessage()
-//        .setText("Your number " + contact.getOhoneNumber()) // teng bo'lsa super admin bo'lsin
-//          .setChatId(messsage.getChatID());
-
-//        }
-//
-//message.hasLocation(){
-//    Location lc = new Location();
-//    Sendmessage = new
-//        .setText("Your loc" + lc.getLatitude() + lc.getLongtitude)
-// .setChatId(messsage.getChatID());
-//        }
-
