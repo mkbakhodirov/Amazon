@@ -40,7 +40,6 @@ public class UsersService implements BaseService<User, User, List<User>> {
     @Override
     public int check(User user, List<User> users) {
         UserRole role = user.getRole();
-
         if (role.equals(UserRole.USER)) {
             String phoneNumber = user.getPhoneNumber();
             for (User user1 : users) {

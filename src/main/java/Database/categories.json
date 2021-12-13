@@ -6,4 +6,12 @@
   "parentId" : null,
   "lastCategory" : true,
   "active" : true
+}, {
+  "id" : "cae27a17-7815-4892-af31-8a60a2ef2d5f",
+  "name" : "wer",
+  "createdAt" : 1639388964618,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
 } ]

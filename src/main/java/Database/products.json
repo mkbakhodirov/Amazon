@@ -1,12 +1,12 @@
 [ {
-  "id" : "35aae398-8d2a-4601-a0fb-221747e2c964",
-  "name" : null,
-  "createdAt" : 1639230042355,
+  "id" : "22bdd89b-8966-42d6-b36f-73ef715f36e0",
+  "name" : "pro",
+  "createdAt" : 1639389256996,
   "updatedAt" : null,
   "price" : 123.0,
   "amount" : 1,
-  "shopId" : "a8269c66-b182-4f34-82b8-ef3a725e321f",
-  "categoryId" : "35ab70d6-c624-41df-b75f-5b61ee15cb69",
+  "shopId" : "0424d0bf-d983-42bb-aabf-f69cb066ca69",
+  "categoryId" : "ea51465c-643a-4def-8a99-af4e087ce1e6",
   "deliveryDays" : 1,
   "active" : true
 } ]

@@ -25,19 +25,7 @@ public class HomeUI implements Response {
     static ProductsService productsService = new ProductsService();
 
     public static void home() throws Exception {
-        User admin = new User(UserRole.ADMIN, "123", "admin");
-        usersService.add(admin);
-        User user = new User(UserRole.USER, "123", "admin");
-        usersService.add(user);
-        List<User> users = usersService.read();
-        User user1 = users.get(1);
-        System.out.println(user1.getPhoneNumber());
-        Category category = new Category("asd");
-        categoriesService.add(category);
-        User shop = new User("shop", UserRole.SHOP, "736", "123", "shop");
-        usersService.add(shop);
-        Product product = new Product(123, 1, shop.getId(), category.getId(), 1);
-        productsService.add(product);
+
 //        boolean stepcode = true;
 //        while (stepcode) {
 //            System.out.println(SELECT);
