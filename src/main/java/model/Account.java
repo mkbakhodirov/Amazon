@@ -1,7 +1,6 @@
 package model;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,7 +8,7 @@ import java.util.UUID;
 
 @Data
 @NoArgsConstructor
-public class Amount {
+public class Account {
     @JacksonXmlProperty(isAttribute = true, localName = "discount")
     private double discount;
     @JacksonXmlProperty(isAttribute = true, localName = "balance")
@@ -23,7 +22,7 @@ public class Amount {
         id = UUID.randomUUID();
     }
 
-    public Amount(UUID userId) {
+    public void Amount(UUID userId) {
         this.userId = userId;
     }
 }

@@ -1,7 +1,6 @@
 package service;
 
 import bot.bot_replies.ReplyBot;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -11,23 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MyBotService implements ReplyBot {
-    private String chatId;
-    private String message;
 
-    private InlineKeyboardMarkup getButtons(){
+    public static InlineKeyboardMarkup getButtons(int numberOfButtons) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> list = new ArrayList<>();
         inlineKeyboardMarkup.setKeyboard(list);
 
         List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
 
-        for(int i = 0; i < 9; i++){
+        for (int i = 0; i < numberOfButtons; i++) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
             inlineKeyboardButton.setText((i + 1) + "");
             inlineKeyboardButton.setCallbackData(String.valueOf(i));
             inlineKeyboardButtons.add(inlineKeyboardButton);
 
-            if((i + 1) % 3 == 0){
+            if ((i + 1) % 3 == 0) {
                 list.add(inlineKeyboardButtons);
                 inlineKeyboardButtons = new ArrayList<>();
             }
@@ -35,10 +32,13 @@ public class MyBotService implements ReplyBot {
         return inlineKeyboardMarkup;
     }
 
-    public static ReplyKeyboardMarkup menu(){
+    public static ReplyKeyboardMarkup menu() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         replyKeyboardMarkup.setKeyboard(keyboardRows);
+
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
         replyKeyboardMarkup.setResizeKeyboard(true);
 
         KeyboardRow keyboardRow = new KeyboardRow();
@@ -49,7 +49,7 @@ public class MyBotService implements ReplyBot {
         keyboardRow1.add(BALANCE);
 
         KeyboardRow keyboardRow2 = new KeyboardRow();
-        keyboardRow2.add(EXIT);
+        keyboardRow2.add(WEBPAGE);
         keyboardRow2.add(HISTORY);
 
         keyboardRows.add(keyboardRow);
@@ -59,10 +59,13 @@ public class MyBotService implements ReplyBot {
         return replyKeyboardMarkup;
     }
 
-    public static ReplyKeyboardMarkup categories(){
+    public static ReplyKeyboardMarkup buymenu() {
         ReplyKeyboardMarkup replyKeyboardMarkup1 = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         replyKeyboardMarkup1.setKeyboard(keyboardRows);
+
+        replyKeyboardMarkup1.setSelective(true);
+        replyKeyboardMarkup1.setOneTimeKeyboard(false);
         replyKeyboardMarkup1.setResizeKeyboard(true);
 
         KeyboardRow keyboardRow = new KeyboardRow();
@@ -80,10 +83,69 @@ public class MyBotService implements ReplyBot {
         keyboardRows.add(keyboardRow);
         keyboardRows.add(keyboardRow1);
         keyboardRows.add(keyboardRow2);
-//
-//        SendMessage sendMessage=new SendMessage();
-//        sendMessage.setReplyMarkup(replyKeyboardMarkup1);
 
         return replyKeyboardMarkup1;
     }
+
+    public static ReplyKeyboardMarkup payType() {
+        ReplyKeyboardMarkup replyKeyboardMarkup1 = new ReplyKeyboardMarkup();
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        replyKeyboardMarkup1.setKeyboard(keyboardRows);
+
+        replyKeyboardMarkup1.setSelective(true);
+        replyKeyboardMarkup1.setOneTimeKeyboard(false);
+        replyKeyboardMarkup1.setResizeKeyboard(true);
+
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add(CLICK);
+        keyboardRow.add(PAY_ME);
+
+        KeyboardRow keyboardRow1 = new KeyboardRow();
+        keyboardRow1.add(PAYPAL);
+        keyboardRow1.add(MASTER_CARD);
+
+        KeyboardRow keyboardRow2 = new KeyboardRow();
+        keyboardRow2.add(BACK);
+        keyboardRow2.add(VISA);
+
+        keyboardRows.add(keyboardRow);
+        keyboardRows.add(keyboardRow1);
+        keyboardRows.add(keyboardRow2);
+
+        return replyKeyboardMarkup1;
+    }
+
+//    public static SendMessage balance(){
+//
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//        SendMessage sendMessage = new SendMessage();
+//
+//        sendMessage.setReplyMarkup(replyKeyboardMarkup);
+//        List<KeyboardRow> keyboardRows = new ArrayList<>();
+//        replyKeyboardMarkup.setKeyboard(keyboardRows);
+//
+//        replyKeyboardMarkup.setSelective(true);
+//        replyKeyboardMarkup.setOneTimeKeyboard(false);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//
+//        KeyboardRow keyboardRow = new KeyboardRow();
+//        keyboardRow.add(BACK);
+//        keyboardRows.add(keyboardRow);
+//
+//        replyKeyboardMarkup.setKeyboard(keyboardRows);
+//        return sendMessage;
+//    }
+
+//    public static ReplyKeyboardMarkup history(){
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//        List<KeyboardRow> keyboardRows = new ArrayList<>();
+//        replyKeyboardMarkup.setKeyboard(keyboardRows);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//
+//        KeyboardRow keyboardRow = new KeyboardRow();
+//        keyboardRow.add(BACK);
+//        keyboardRows.add(keyboardRow);
+//
+//        return replyKeyboardMarkup;
+//    }
 }

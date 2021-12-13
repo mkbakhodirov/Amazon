@@ -5,5 +5,5 @@ public enum PaymentType {
     PAY_ME,
     MASTER_CARD,
     VISA,
-    PAY_PALL
+    PAY_PAL
 }
