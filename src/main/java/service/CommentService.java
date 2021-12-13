@@ -22,12 +22,10 @@ public class CommentService implements BaseService<Comment, Product, List<Commen
             comments = new ArrayList<>();
         int res = check(comment, comments);
         if (res == 1) {
-            products.add(product);
-            write(file, products);
+            comments.add(comment);
+            write(file, comments);
             return SUCCESS;
         }
-        else if (res == -1)
-            return INVALID_PRODUCT;
         return null;
     }
 
@@ -37,8 +35,12 @@ public class CommentService implements BaseService<Comment, Product, List<Commen
     }
 
     @Override
-    public int check(Comment comment, List<Comment> list) {
-        for (Comment comment1 : )
+    public int check(Comment comment, List<Comment> comments) {
+        for (Comment comment1 : comments) {
+            if (comment1.equals(comment))
+                return 0;
+        }
+        return 1;
     }
 
     @Override

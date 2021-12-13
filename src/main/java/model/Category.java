@@ -24,4 +24,9 @@ public class Category extends BaseModel {
     public Category(String name) {
         super(name);
     }
+
+    public Category(String name, UUID parentId) {
+        super(name);
+        this.parentId = parentId;
+    }
 }

@@ -34,7 +34,8 @@ public class UsersService implements BaseService<User, User, List<User>> {
 
     @Override
     public String remove(User user) {
-        return null;
+        user.setActive(false);
+        return SUCCESS;
     }
 
     @Override
@@ -66,13 +67,13 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     @Override
-    public List<User> getList(User user) {
+    public List<User> getList(User shop) {
         return null;
     }
 
     @Override
     public List<User> getList() {
-        return null;
+        return read();
     }
 
     @Override
@@ -102,5 +103,29 @@ public class UsersService implements BaseService<User, User, List<User>> {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public List<User> getActiveAdminsList() {
+        List<User> users = read();
+        List<User> admins = new ArrayList<>();
+        if (users != null) {
+            for (User user : users) {
+                if (user.isActive() && user.getRole().equals(UserRole.ADMIN))
+                    admins.add(user);
+            }
+        }
+        return admins;
+    }
+
+    public List<User> getAdminsList() {
+        List<User> users = read();
+        List<User> admins = new ArrayList<>();
+        if (users != null) {
+            for (User user : users) {
+                if (user.getRole().equals(UserRole.ADMIN))
+                    admins.add(user);
+            }
+        }
+        return admins;
     }
 }

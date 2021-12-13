@@ -47,12 +47,10 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
                     execute(MyBotService.menu(), null);
                 }
                 case BUY -> {
-                    this.message = "Ready";
-                    execute(MyBotService.buymenu(), null);
+                    execute(null, MyBotService.buymenu());
                 }
                 case PAYMENT_TYPE -> {
-                    this.message = "Ready";
-                    execute(MyBotService.payType(), null);
+                    execute(null, MyBotService.payType());
                 }
                 case BALANCE -> {
                     this.message = "running";
