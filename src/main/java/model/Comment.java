@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = false)
@@ -16,4 +17,6 @@ public class Comment {
     private UUID productId;
     private UUID userId;
     private UUID parentId;
+
+
 }

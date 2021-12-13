@@ -60,7 +60,7 @@ public class CategoriesService implements BaseService<Category, Category, List<C
         List<Category> subCategories = new ArrayList<>();
         if (categories != null) {
             for (Category category1 : categories) {
-                if (category1.getParentId().equals(categoryId))
+                if (category1.getParentId() != null && category1.getParentId().equals(categoryId))
                     subCategories.add(category1);
             }
         }

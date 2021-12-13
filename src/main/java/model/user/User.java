@@ -17,13 +17,13 @@ public class User extends BaseModel {
     private String password;
     private String username;
 
-    public User(UserRole role, String password, String str) {
+    public User(UserRole role, String str, String password) {
         this.role = role;
-        this.password = password;
         if (role.equals(UserRole.USER))
             this.phoneNumber = str;
         else
             this.username = str;
+        this.password = password;
     }
 
     public User(String name, UserRole role, String phoneNumber, String password, String username) {

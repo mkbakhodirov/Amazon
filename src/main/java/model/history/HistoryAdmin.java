@@ -13,10 +13,5 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HistoryAdmin extends BaseHistory {
-    @JacksonXmlProperty(isAttribute = true, localName = "productId")
-    private UUID productId;
-    @JacksonXmlProperty(isAttribute = true, localName = "price")
-    private double price;
-    @JacksonXmlProperty(isAttribute = true, localName = "amount")
-    private int amount;
+    private UUID adminId;
 }
