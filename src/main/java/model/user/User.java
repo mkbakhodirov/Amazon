@@ -11,10 +11,26 @@ import model.base.BaseModel;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-
 public class User extends BaseModel {
     private UserRole role;
     private String phoneNumber;
     private String password;
     private String username;
+
+    public User(UserRole role, String password, String str) {
+        this.role = role;
+        this.password = password;
+        if (role.equals(UserRole.USER))
+            this.phoneNumber = str;
+        else
+            this.username = str;
+    }
+
+    public User(String name, UserRole role, String phoneNumber, String password, String username) {
+        super(name);
+        this.role = role;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.username = username;
+    }
 }

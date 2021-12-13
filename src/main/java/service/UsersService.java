@@ -1,6 +1,8 @@
 package service;
 
 import Database.BaseUrl;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.user.User;
 import model.user.UserRole;
 import service.base.BaseService;
@@ -14,7 +16,7 @@ public class UsersService implements BaseService<User, User, List<User>> {
 
     @Override
     public String add(User user) {
-        List<User> users = read(file);
+        List<User> users = read();
         if (users == null)
             users = new ArrayList<>();
         int res = check(user, users);
@@ -38,6 +40,7 @@ public class UsersService implements BaseService<User, User, List<User>> {
     @Override
     public int check(User user, List<User> users) {
         UserRole role = user.getRole();
+
         if (role.equals(UserRole.USER)) {
             String phoneNumber = user.getPhoneNumber();
             for (User user1 : users) {
@@ -79,7 +82,7 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     public User get(String str1, String password) {
-        List<User> users = read(file);
+        List<User> users = read();
         if (users != null) {
             for (User user: users) {
                 try {
@@ -92,5 +95,13 @@ public class UsersService implements BaseService<User, User, List<User>> {
             }
         }
         return null;
+    }
+
+    public List<User> read() {
+        try {
+            return new ObjectMapper().readValue(file, new TypeReference<>() {});
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

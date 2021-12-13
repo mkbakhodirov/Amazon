@@ -14,7 +14,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Category extends BaseModel {
-    @JacksonXmlProperty(isAttribute = true, localName = "parentId")
     private UUID parentId;
+    private boolean isLastCategory;
 
+    {
+        isLastCategory = true;
+    }
+
+    public Category(String name) {
+        super(name);
+    }
 }

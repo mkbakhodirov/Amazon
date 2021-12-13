@@ -1,6 +1,7 @@
 package service;
 
 import Database.BaseUrl;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -11,12 +12,14 @@ import service.base.BaseService;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 public class ProductsService implements BaseService<Product, Category, List<Product>> {
     static File file = new File(BaseUrl.url + "products.json");
 
     @Override
     public String add(Product product) {
-        List<Product> products = read(file);
+        List<Product> products = read();
         if (products == null)
             products = new ArrayList<>();
         int res = check(product, products);
@@ -54,7 +57,14 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
 
     @Override
     public List<Product> getList(Category category) {
-        return null;
+        UUID categoryId = category.getId();
+        List<Product> products = read();
+        List<Product> productsOfCategory = new ArrayList<>();
+        for (Product product : products) {
+            if (product.getCategoryId().equals(categoryId))
+                productsOfCategory.add(product);
+        }
+        return productsOfCategory;
     }
 
     @Override
@@ -65,5 +75,13 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+    public List<Product> read() {
+        try {
+            return new ObjectMapper().readValue(file, new TypeReference<>() {});
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -1,0 +1,31 @@
+[ {
+  "id" : "d15d0bde-e508-489d-a3bb-146b8da4bbd9",
+  "name" : null,
+  "createdAt" : 1639229568090,
+  "updatedAt" : null,
+  "role" : "ADMIN",
+  "phoneNumber" : null,
+  "password" : "123",
+  "username" : "admin",
+  "active" : true
+}, {
+  "id" : "aaed1029-b54e-40b0-9fbe-c5f1586ea929",
+  "name" : null,
+  "createdAt" : 1639229669703,
+  "updatedAt" : null,
+  "role" : "USER",
+  "phoneNumber" : "admin",
+  "password" : "123",
+  "username" : null,
+  "active" : true
+}, {
+  "id" : "a8269c66-b182-4f34-82b8-ef3a725e321f",
+  "name" : "shop",
+  "createdAt" : 1639230042349,
+  "updatedAt" : null,
+  "role" : "SHOP",
+  "phoneNumber" : "736",
+  "password" : "123",
+  "username" : "shop",
+  "active" : true
+} ]

@@ -25,6 +25,5 @@ public class Product extends BaseModel {
     private int amount;
     private UUID shopId;
     private UUID categoryId;
-    private Date deliveryDate;
-
+    private int deliveryDays;
 }

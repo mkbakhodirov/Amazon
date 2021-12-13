@@ -9,29 +9,22 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 import java.util.UUID;
 
-@EqualsAndHashCode(callSuper = false)
 @Data
 @NoArgsConstructor
-
 public abstract class BaseModel {
-    @JacksonXmlProperty(isAttribute = true, localName = "id")
     protected final UUID id;
-    @JacksonXmlProperty(isAttribute = true, localName = "name")
     protected String name;
-    @JacksonXmlProperty(isAttribute = true, localName = "isActive")
     protected boolean isActive;
-    @JacksonXmlProperty(isAttribute = true, localName = "createdAt")
     protected Date createdAt;
-    @JacksonXmlProperty(isAttribute = true, localName = "updatedAt")
     protected Date updatedAt;
 
     {
+        isActive = true;
         id = UUID.randomUUID();
+        createdAt = new Date();
     }
 
     public BaseModel(String name) {
         this.name = name;
-        this.isActive = true;
-        this.createdAt = new Date();
     }
 }
