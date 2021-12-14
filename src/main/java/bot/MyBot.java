@@ -20,6 +20,7 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
     private String chatId;
     private String message;
     private String pictureName;
+    private String pathToPicture;
 
     @Override
     public void check(String data) {
@@ -60,7 +61,6 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
                 }
                 case HISTORY -> {
                     this.message = "";
-//                    execute(MyBotService.history(), null);
                 }
                 case WEBPAGE -> {
                     this.message = "Opening...";
@@ -104,3 +104,9 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
         }
     }
 }
+/*
+bot state enum ochiladi
+keyin obyekt olib botni state beriladi
+
+
+ */
