@@ -33,7 +33,7 @@ public class CategoriesService implements BaseService<Category, Category, List<C
 
     @Override
     public String remove(Category category) {
-        return null;
+
     }
 
     @Override

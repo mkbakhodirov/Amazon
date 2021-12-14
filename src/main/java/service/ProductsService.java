@@ -7,6 +7,9 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import model.Category;
 import model.Product;
+import model.history.HistoryShop;
+import model.history.HistoryUser;
+import model.user.User;
 import service.base.BaseService;
 
 import java.io.File;
@@ -82,6 +85,38 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
             return new ObjectMapper().readValue(file, new TypeReference<>() {});
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public String order(Product product, User user, int amount) {
+        if (amount < 1)
+            return "Enter positive number";
+        if (product.getAmount() < 1)
+            return "There is not a product";
+        else if (product.getAmount() < amount)
+            return "Product amount is not enough";
+        else {
+            int amount1 = product.getAmount() - amount;
+            product.setAmount(amount1);
+            double balanceUser = user.getBalance() - product.getPrice() * amount;
+            if (balanceUser < 0)
+                return "Balance is not enough";
+            else {
+                HistoriesService historiesService = new HistoriesService();
+                User shop = new UsersService().getById(product.getShopId());
+                HistoryUser historyUser = new HistoryUser(product.getName(), shop.getName(), product.getPrice(), amount, user.getId());
+                int res = historiesService.check(historyUser, historiesService.read());
+                if (res == 1) {
+                    double balanceShop = shop.getBalance() + product.getPrice() * amount;
+                    shop.setBalance(balanceShop);
+                    user.setBalance(balanceUser);
+                    HistoryShop historyShop = new HistoryShop(product.getName(), product.getPrice(), amount, user.getName(), shop.getId());
+                    historiesService.add(historyShop);
+                    historiesService.add(historyUser);
+                    return SUCCESS;
+                }
+                return null;
+            }
         }
     }
 }

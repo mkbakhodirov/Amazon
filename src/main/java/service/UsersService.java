@@ -10,6 +10,7 @@ import service.base.BaseService;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UsersService implements BaseService<User, User, List<User>> {
     static File file = new File(BaseUrl.url + "users.json");
@@ -34,7 +35,8 @@ public class UsersService implements BaseService<User, User, List<User>> {
 
     @Override
     public String remove(User user) {
-        user.setActive(false);
+        if (user.isActive())
+            user.setActive(false);
         return SUCCESS;
     }
 
@@ -127,5 +129,14 @@ public class UsersService implements BaseService<User, User, List<User>> {
             }
         }
         return admins;
+    }
+
+    public User getById(UUID id) {
+        List<User> users = read();
+        for (User user : users) {
+            if (user.getId().equals(id))
+                return user;
+        }
+        return null;
     }
 }

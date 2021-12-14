@@ -16,6 +16,7 @@ public class User extends BaseModel {
     private String phoneNumber;
     private String password;
     private String username;
+    private double balance;
 
     public User(UserRole role, String str, String password) {
         this.role = role;
