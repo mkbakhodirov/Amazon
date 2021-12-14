@@ -1,7 +1,7 @@
-package bot.bot_base.botLogic;
+package bot;
 
 import bot.bot_base.TelegramBotUtils;
-import bot.bot_pictures.Base;
+import bot.bot_pictures.Pictures;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,10 +11,11 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import service.MyBotService;
 
 import java.io.File;
 
-public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, Base {
+public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, Pictures {
 
     private String chatId;
     private String message;
@@ -37,76 +38,49 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
     @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
-        String data = "";
         this.chatId = update.getMessage().getChatId().toString();
-        BotState botState = null;
         if (update.hasMessage()) {
             String text = update.getMessage().getText();
             switch (text) {
-                case STARTBOT -> {
-                    botState = BotState.START;
+                case "/start" -> {
+                    this.message = START;
+                    execute(MyBotService.menu(), null);
                 }
                 case BUY -> {
-                    botState = BotState.BUY;
+                    this.message = "Ready";
+                    execute(MyBotService.buymenu(), null);
                 }
                 case PAYMENT_TYPE -> {
-                    botState = BotState.PAYMENT_TYPE;
+                    this.message = "Ready";
+                    execute(MyBotService.payType(), null);
                 }
                 case BALANCE -> {
-                    botState = BotState.BALANCE;
+                    this.message = "running";
+                    sendPhoto();
                 }
                 case HISTORY -> {
-                    botState = BotState.HISTORY;
+                    this.message = "";
+//                    execute(MyBotService.history(), null);
                 }
                 case WEBPAGE -> {
-                    botState = BotState.WEBPAGE;
+                    this.message = "Opening...";
+                    execute(null, null);
                 }
-                default -> execute(null, null, INVALID_COMMAND);
             }
         } else if (update.hasCallbackQuery()) {
             this.chatId = update.getCallbackQuery().getMessage().getChatId().toString();
-           data = update.getCallbackQuery().getData();
+            String data = update.getCallbackQuery().getData();
 
-            if (isCategory(data)) {
-                botState = BotState.CATEGORY;
-            } else if (isProduct(data)) {
-                botState = BotState.PRODUCT;
-            } else if (data.equals(BACK)) {
-                botState = BotState.START;
-//                switch (botState) {
-//                    case BALANCE -> botState = BotState.START;
-//                    case HISTORY -> botState = BotState.START;
-//                    case WEBPAGE -> botState = BotState.START;
-//                    case BUY -> botState = BotState.START;
-//
-//                    case LAPTOPS -> botState = BotState.BUY;
-//                    case FOOD -> botState = BotState.BUY;
-//                    case THINGS_FOR_HOME -> botState = BotState.BUY;
-//                    case TECHNOLOGIES -> botState = BotState.BUY;
-//
-//                }
+            switch (data) {
+                case "1" -> this.message = "Men ishlayapman";
             }
-        }
-
-        switch (botState) {
-            case START -> execute(null, null, STARTHELLO);// break;
-            case BUY -> execute(null, MyBotService.buyMenu(), READY);// break;
-            case PAYMENT_TYPE -> execute(null, MyBotService.payType(), READY);// break;
-            //case CATEGORY -> ; break;
-            //case PRODUCT ->    ; break;
-            case HISTORY -> execute(null, MyBotService.history(), READY);// break;
-            case BALANCE -> execute(null, MyBotService.balance(data), READY);// break;
-            case WEBPAGE -> execute(null, null, WEBPAGE);// break;
-            default -> execute(null, null, INVALID_COMMAND);
-
-
         }
     }
 
-    private synchronized void execute(ReplyKeyboardMarkup r, InlineKeyboardMarkup i, String text) {
+    private void execute(ReplyKeyboardMarkup r, InlineKeyboardMarkup i) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(this.chatId);/// kimga junatish krk
-        sendMessage.setText(text);/// accountga boradigan message
+        sendMessage.setText(this.message);/// accountga boradigan message
         sendMessage.setReplyMarkup(i == null ? r : i);
 
         try {

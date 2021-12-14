@@ -2,9 +2,7 @@ package bot.bot_replies;
 
 public interface ReplyBot {
 
-     String STARTBOT = "/start";
-     String BACK = "/back";
-     String STARTHELLO = "Assalamu alaykum \nBizning Online Amazon botimizga hush kelibsiz";
+     String START = "Assalamu alaykum \nBizning Online Amazon botimizga hush kelibsiz";
      /// main manu
      String BUY = "\uD83D\uDCBC Sotib olish";
      String PAYMENT_TYPE = "\uD83D\uDCB8 To'lov turi";
@@ -26,12 +24,6 @@ public interface ReplyBot {
      String PAYPAL = "\uD83D\uDCB2 PayPal";
      String MASTER_CARD = "\uD83D\uDCB5 Master Card";
      String VISA = "\uD83D\uDCB0 VISA";
-
-     String READY = "READY";
-     String CHOOSE = "CHOOSE";
-     String OPENING = "OPENING";
-     String PROCESSING = "PROCESSING";
-     String INVALID_COMMAND = "INVALID COMMAND";
 
 
 
