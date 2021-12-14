@@ -16,14 +16,6 @@ public interface BaseService<T, S, L> extends Response {
     L getList();
     boolean isEmpty();
 
-    default L read(File file) {
-        try {
-            return new ObjectMapper().readValue(file, new TypeReference<>() {});
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
     default void write(File file, L list) {
         try {
             new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(file, list);

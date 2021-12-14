@@ -1,6 +1,8 @@
 package service;
 
 import Database.BaseUrl;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Category;
 import model.Product;
 import service.base.BaseService;
@@ -8,13 +10,14 @@ import service.base.BaseService;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CategoriesService implements BaseService<Category, Category, List<Category>> {
     static File file = new File(BaseUrl.url + "categories.json");
 
     @Override
     public String add(Category category) {
-        List<Category> categories = read(file);
+        List<Category> categories = read();
         if (categories == null)
             categories = new ArrayList<>();
         int res = check(category, categories);
@@ -52,16 +55,42 @@ public class CategoriesService implements BaseService<Category, Category, List<C
 
     @Override
     public List<Category> getList(Category category) {
-        return null;
+        UUID categoryId = category.getId();
+        List<Category> categories = read();
+        List<Category> subCategories = new ArrayList<>();
+        if (categories != null) {
+            for (Category category1 : categories) {
+                if (category1.getParentId() != null && category1.getParentId().equals(categoryId))
+                    subCategories.add(category1);
+            }
+        }
+        return subCategories;
     }
 
     @Override
     public List<Category> getList() {
-        return null;
+        List<Category> categories = read();
+        List<Category> mainCategories = new ArrayList<>();
+        if (categories != null) {
+            for (Category category : categories) {
+                if (category.getParentId() == null)
+                    mainCategories.add(category);
+            }
+        }
+        return mainCategories;
     }
 
     @Override
     public boolean isEmpty() {
         return false;
     }
+
+    public List<Category> read() {
+        try {
+            return new ObjectMapper().readValue(file, new TypeReference<>() {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

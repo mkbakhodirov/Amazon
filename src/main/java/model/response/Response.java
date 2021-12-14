@@ -27,5 +27,6 @@ public interface Response {
     String INVALID_PRODUCT = "THERE IS ALREADY PRODUCT WITH THIS NAME";
     String INVALID_USERNAME = "THERE IS ALREADY USER WITH THIS USERNAME";
     String INVALID_CATEGORY = "THERE IS ALREADY CATEGORY WITH THIS NAME";
-
+    String INCORRECT_ADMIN = "Username or password is incorrect";
+    String EMPTY_LIST = "List is empty";
 }

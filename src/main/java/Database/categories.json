@@ -1,0 +1,33 @@
+[ {
+  "id" : "a22febe0-e646-4b0e-8dd8-030426df1225",
+  "name" : "mobile",
+  "createdAt" : 1639401695640,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "7e733eb9-139c-47ed-82d4-5dab401947bc",
+  "name" : "note",
+  "createdAt" : 1639401828428,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "bd13b95e-345e-4787-8f81-a8b86ed5a17d",
+  "name" : "samsung",
+  "createdAt" : 1639402633597,
+  "updatedAt" : null,
+  "parentId" : "a22febe0-e646-4b0e-8dd8-030426df1225",
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "08163be0-25dd-4777-8bd6-1c4d16d9e7fc",
+  "name" : "galaxy",
+  "createdAt" : 1639402660259,
+  "updatedAt" : null,
+  "parentId" : "bd13b95e-345e-4787-8f81-a8b86ed5a17d",
+  "lastCategory" : true,
+  "active" : true
+} ]

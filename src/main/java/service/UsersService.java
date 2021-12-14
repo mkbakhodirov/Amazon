@@ -1,6 +1,8 @@
 package service;
 
 import Database.BaseUrl;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import model.user.User;
 import model.user.UserRole;
 import service.base.BaseService;
@@ -14,7 +16,7 @@ public class UsersService implements BaseService<User, User, List<User>> {
 
     @Override
     public String add(User user) {
-        List<User> users = read(file);
+        List<User> users = read();
         if (users == null)
             users = new ArrayList<>();
         int res = check(user, users);
@@ -32,7 +34,8 @@ public class UsersService implements BaseService<User, User, List<User>> {
 
     @Override
     public String remove(User user) {
-        return null;
+        user.setActive(false);
+        return SUCCESS;
     }
 
     @Override
@@ -64,13 +67,13 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     @Override
-    public List<User> getList(User user) {
+    public List<User> getList(User shop) {
         return null;
     }
 
     @Override
     public List<User> getList() {
-        return null;
+        return read();
     }
 
     @Override
@@ -79,7 +82,7 @@ public class UsersService implements BaseService<User, User, List<User>> {
     }
 
     public User get(String str1, String password) {
-        List<User> users = read(file);
+        List<User> users = read();
         if (users != null) {
             for (User user: users) {
                 try {
@@ -92,5 +95,37 @@ public class UsersService implements BaseService<User, User, List<User>> {
             }
         }
         return null;
+    }
+
+    public List<User> read() {
+        try {
+            return new ObjectMapper().readValue(file, new TypeReference<>() {});
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<User> getActiveAdminsList() {
+        List<User> users = read();
+        List<User> admins = new ArrayList<>();
+        if (users != null) {
+            for (User user : users) {
+                if (user.isActive() && user.getRole().equals(UserRole.ADMIN))
+                    admins.add(user);
+            }
+        }
+        return admins;
+    }
+
+    public List<User> getAdminsList() {
+        List<User> users = read();
+        List<User> admins = new ArrayList<>();
+        if (users != null) {
+            for (User user : users) {
+                if (user.getRole().equals(UserRole.ADMIN))
+                    admins.add(user);
+            }
+        }
+        return admins;
     }
 }
