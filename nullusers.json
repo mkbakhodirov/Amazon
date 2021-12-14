@@ -1,0 +1,21 @@
+[ {
+  "id" : "b1f4a805-c428-4037-a0fb-34b5046abec7",
+  "name" : null,
+  "createdAt" : 1639477685460,
+  "updatedAt" : null,
+  "role" : "SUPER_ADMIN",
+  "phoneNumber" : null,
+  "password" : "123",
+  "username" : "qwe",
+  "active" : true
+}, {
+  "id" : "69435e3e-a647-4752-94c3-479ffde7b58d",
+  "name" : null,
+  "createdAt" : 1639477721894,
+  "updatedAt" : null,
+  "role" : "ADMIN",
+  "phoneNumber" : null,
+  "password" : "a",
+  "username" : "a",
+  "active" : true
+} ]
