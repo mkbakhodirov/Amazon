@@ -1,6 +1,7 @@
 package ui;
 
 import Database.BaseUrl;
+import bot.MyBot;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Category;
@@ -8,6 +9,9 @@ import model.Product;
 import model.response.Response;
 import model.user.User;
 import model.user.UserRole;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import service.CategoriesService;
 import service.ProductsService;
 import service.UsersService;
@@ -26,6 +30,12 @@ public class HomeUI implements Response {
     static ProductsService productsService = new ProductsService();
 
     public static void home() throws Exception {
+        try{
+            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+            telegramBotsApi.registerBot(new MyBot());
+        }catch (TelegramApiRequestException e){
+            e.printStackTrace();
+        }
 
         boolean stepcode = true;
         while (stepcode) {

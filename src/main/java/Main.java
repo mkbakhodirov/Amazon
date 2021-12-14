@@ -10,6 +10,10 @@ public class Main {
         BaseUrl.urls.add("C:\\D\\PDP\\Java Backend FAANG\\Amazon\\src\\main\\java\\Database\\");
         BaseUrl.urls.add("C:\\Users\\Tohir\\Desktop\\Amazon\\src\\main\\java\\Database\\");
         BaseUrl.urls.add("/home/muhammadsodiq/PDP Projects/Amazon1/src/main/java/Database\\");
+        BaseUrl.url = BaseUrl.urls.get(1);
+        UsersService usersService = new UsersService();
+        User superAdmin = new User(UserRole.SUPER_ADMIN, "qwe", "123");
+        usersService.add(superAdmin);
         BaseUrl.url = BaseUrl.urls.get(0);
         UsersService usersService = new UsersService();
         User superAdmin = new User(UserRole.SUPER_ADMIN, "qwe", "123");
