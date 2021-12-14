@@ -44,25 +44,23 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
             switch (text) {
                 case "/start" -> {
                     this.message = START;
-                    execute(MyBotService.menu(), null);
+                    execute(MyBotService.menu(), null, "");
                 }
                 case BUY -> {
-                    execute(null, MyBotService.buymenu());
+                    execute(null, MyBotService.buymenu(),CHOOSE);
                 }
                 case PAYMENT_TYPE -> {
-                    execute(null, MyBotService.payType());
+                    execute(null, MyBotService.payType(), CHOOSE);
                 }
                 case BALANCE -> {
                     this.message = "running";
                     sendPhoto();
                 }
                 case HISTORY -> {
-                    this.message = "";
-//                    execute(MyBotService.history(), null);
+                    execute(null, MyBotService.history(), READY);
                 }
                 case WEBPAGE -> {
-                    this.message = "Opening...";
-                    execute(null, null);
+                    execute(null, null, OPENING);
                 }
             }
         } else if (update.hasCallbackQuery()) {
@@ -75,10 +73,10 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
         }
     }
 
-    private void execute(ReplyKeyboardMarkup r, InlineKeyboardMarkup i) {
+    private synchronized void execute(ReplyKeyboardMarkup r, InlineKeyboardMarkup i, String text) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(this.chatId);/// kimga junatish krk
-        sendMessage.setText(this.message);/// accountga boradigan message
+        sendMessage.setText(text);/// accountga boradigan message
         sendMessage.setReplyMarkup(i == null ? r : i);
 
         try {

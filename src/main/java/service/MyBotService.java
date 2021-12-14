@@ -1,7 +1,8 @@
 package service;
 
 import bot.bot_replies.ReplyBot;
-import model.payment.PaymentType;
+import model.Category;
+import model.PaymentType;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -60,7 +61,7 @@ public class MyBotService implements ReplyBot {
         return replyKeyboardMarkup;
     }
 
-    static CategoriesService categoriesService;
+    static CategoriesService categoriesService = new CategoriesService();
 
     public static InlineKeyboardMarkup buymenu() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -68,19 +69,20 @@ public class MyBotService implements ReplyBot {
         inlineKeyboardMarkup.setKeyboard(list);
 
         List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
-        if(categoriesService.getList() != null)
-        for (int i = 0; i < categoriesService.getList().size(); i++) {
-            InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-            inlineKeyboardButton.setText(categoriesService.getList().get(i).toString());
-            inlineKeyboardButton.setCallbackData(String.valueOf(i));
-            inlineKeyboardButtons.add(inlineKeyboardButton);
+        List<Category> parentCategoryList = categoriesService.getList();
+        if (parentCategoryList != null)
+            for (int i = 0; i < parentCategoryList.size(); i++) {
+                InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+                inlineKeyboardButton.setText(parentCategoryList.get(i).getName());
+                inlineKeyboardButton.setCallbackData(String.valueOf(i));
+                inlineKeyboardButtons.add(inlineKeyboardButton);
 
-            if (i + 1 % 3 == 0) {
-                list.add(inlineKeyboardButtons);
-                inlineKeyboardButtons = new ArrayList<>();
-            } else if (i > categoriesService.getList().size() - 3 && inlineKeyboardButtons != null)
-                list.add(inlineKeyboardButtons);
-        }
+                if ((i + 1) % 3 == 0) {
+                    list.add(inlineKeyboardButtons);
+                    inlineKeyboardButtons = new ArrayList<>();
+                } else if (i > parentCategoryList.size() - 3 && inlineKeyboardButtons != null)
+                    list.add(inlineKeyboardButtons);
+            }
         return inlineKeyboardMarkup;
     }
 
@@ -107,8 +109,14 @@ public class MyBotService implements ReplyBot {
                 list.add(inlineKeyboardButtons);
                 inlineKeyboardButtons = new ArrayList<>();
             }  //else if (i > categoriesService.getList().size() - 3 && inlineKeyboardButtons != null)
-               //  list.add(inlineKeyboardButtons);
+            //  list.add(inlineKeyboardButtons);
         }
+        return inlineKeyboardMarkup;
+    }
+
+    public static InlineKeyboardMarkup history() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+
         return inlineKeyboardMarkup;
     }
 }

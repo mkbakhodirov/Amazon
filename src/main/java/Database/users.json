@@ -18,4 +18,14 @@
   "password" : "123",
   "username" : "asd",
   "active" : true
+}, {
+  "id" : "7595eeb7-fd93-42a4-a51f-ee185307254f",
+  "name" : null,
+  "createdAt" : 1639477250758,
+  "updatedAt" : null,
+  "role" : "ADMIN",
+  "phoneNumber" : null,
+  "password" : "a",
+  "username" : "a",
+  "active" : true
 } ]

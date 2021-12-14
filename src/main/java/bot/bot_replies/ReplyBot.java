@@ -25,6 +25,11 @@ public interface ReplyBot {
      String MASTER_CARD = "\uD83D\uDCB5 Master Card";
      String VISA = "\uD83D\uDCB0 VISA";
 
+     String READY = "READY";
+     String CHOOSE = "CHOOSE";
+     String OPENING = "OPENING";
+     String PROCESSING = "PROCESSING";
+
 
 
 }

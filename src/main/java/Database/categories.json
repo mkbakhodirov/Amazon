@@ -30,4 +30,44 @@
   "parentId" : "bd13b95e-345e-4787-8f81-a8b86ed5a17d",
   "lastCategory" : true,
   "active" : true
+}, {
+  "id" : "1eceef86-f169-4f19-af18-760e933f0a36",
+  "name" : "Laptops",
+  "createdAt" : 1639477744655,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "b8f87f81-0252-40c9-bc92-68da541c3358",
+  "name" : "Clothes",
+  "createdAt" : 1639477768571,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "d8a5e3b0-57a9-4b22-b2f6-58dd6ceb8f3f",
+  "name" : "Food",
+  "createdAt" : 1639477791261,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "3885ee09-ef35-4f0e-9c45-8ba4ed16858c",
+  "name" : "Books",
+  "createdAt" : 1639477808177,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
+}, {
+  "id" : "cae31c71-7957-40b5-a498-0739603f3c8d",
+  "name" : "THings for home",
+  "createdAt" : 1639477815041,
+  "updatedAt" : null,
+  "parentId" : null,
+  "lastCategory" : true,
+  "active" : true
 } ]
