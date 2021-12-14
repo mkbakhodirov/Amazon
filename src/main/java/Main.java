@@ -14,6 +14,10 @@ public class Main {
         UsersService usersService = new UsersService();
         User superAdmin = new User(UserRole.SUPER_ADMIN, "qwe", "123");
         usersService.add(superAdmin);
+        BaseUrl.url = BaseUrl.urls.get(0);
+        UsersService usersService = new UsersService();
+        User superAdmin = new User(UserRole.SUPER_ADMIN, "qwe", "123");
+        usersService.add(superAdmin);
         HomeUI.home();
     }
 }
