@@ -6,6 +6,7 @@ public interface ReplyBot {
      /// Registration
      String SIGN_IN = "Sign in";
      String SIGN_UP = "Sign up";
+     String SHARE_CONTACK = "Kontactimini ulashing";
 
      /// main manu
      String BUY = "\uD83D\uDCBC Sotib olish";
@@ -14,6 +15,7 @@ public interface ReplyBot {
      String HISTORY = "\uD83D\uDC40 Histroy";
      String BACK = "\uD83D\uDD19 Back";
      String WEBPAGE = "\uD83D\uDD17 Our Website";
+     String PURCHASES = "\uD83D\uDED2 Basket";
 
           ///  buy menu
      String LAPTOPS = "\uD83D\uDCBB Laptops";
@@ -29,6 +31,13 @@ public interface ReplyBot {
      String MASTER_CARD = "\uD83D\uDCB5 Master Card";
      String VISA = "\uD83D\uDCB0 VISA";
 
-
-
+      //// inline keyboard markup words
+      String[] BUTTON_WORDS = {"-", "Clear", "+", "\uD83D\uDC4D", "Add to card","\uD83D\uDC4E and ❌"};
+     //
+     String MINUS = "-";
+     String CLEAR = "Clear";
+     String ADD = "+";
+     String ADD_TO_CARD = "Add to card";
+     String LIKE = "\uD83D\uDC4D";
+     String DISLIKE = "\uD83D\uDC4E and ❌";
 }
