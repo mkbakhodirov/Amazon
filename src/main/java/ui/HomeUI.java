@@ -1,11 +1,7 @@
 package ui;
 
-import Database.BaseUrl;
-import bot.MyBot;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import bot.bot_base.botLogic.MyBot;
 import model.Category;
-import model.Product;
 import model.response.Response;
 import model.user.User;
 import model.user.UserRole;
@@ -16,8 +12,6 @@ import service.CategoriesService;
 import service.ProductsService;
 import service.UsersService;
 
-import java.io.File;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -30,10 +24,10 @@ public class HomeUI implements Response {
     static ProductsService productsService = new ProductsService();
 
     public static void home() throws Exception {
-        try{
+        try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(new MyBot());
-        }catch (TelegramApiRequestException e){
+        } catch (TelegramApiRequestException e) {
             e.printStackTrace();
         }
 
@@ -63,8 +57,7 @@ public class HomeUI implements Response {
                 superAdminUI(admin);
             else if (admin.getRole().equals(UserRole.ADMIN))
                 adminUI(admin);
-        }
-        else
+        } else
             System.out.println(INCORRECT_ADMIN);
     }
 
@@ -169,8 +162,7 @@ public class HomeUI implements Response {
                 String res = categoriesService.add(category);
                 if (res != null)
                     System.out.println(res);
-            }
-            else if (index1 == 0)
+            } else if (index1 == 0)
                 stepCode = false;
             else {
                 Category category = categories.get(index1 - 1);
@@ -198,8 +190,7 @@ public class HomeUI implements Response {
                 if (category.isLastCategory())
                     category.setLastCategory(false);
             }
-        }
-        else if (index1 != 0) {
+        } else if (index1 != 0) {
             Category category1 = categories.get(index1 - 1);
             addSubcategory(category1);
         }
