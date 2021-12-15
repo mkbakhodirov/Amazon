@@ -11,6 +11,8 @@ import java.util.List;
 
 public class MyBotService implements ReplyBot {
 
+    /* reply keyboardbutton ishlatilsin instead of keyboardrow*/
+
     public static InlineKeyboardMarkup getButtons(int numberOfButtons) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> list = new ArrayList<>();
@@ -30,6 +32,24 @@ public class MyBotService implements ReplyBot {
             }
         }
         return inlineKeyboardMarkup;
+    }
+
+    public static ReplyKeyboardMarkup register(){
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add(SIGN_IN);
+        keyboardRow.add(SIGN_UP);
+
+        keyboardRows.add(keyboardRow);
+
+        return replyKeyboardMarkup;
     }
 
     public static ReplyKeyboardMarkup menu() {
@@ -114,38 +134,4 @@ public class MyBotService implements ReplyBot {
 
         return replyKeyboardMarkup1;
     }
-
-//    public static SendMessage balance(){
-//
-//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//        SendMessage sendMessage = new SendMessage();
-//
-//        sendMessage.setReplyMarkup(replyKeyboardMarkup);
-//        List<KeyboardRow> keyboardRows = new ArrayList<>();
-//        replyKeyboardMarkup.setKeyboard(keyboardRows);
-//
-//        replyKeyboardMarkup.setSelective(true);
-//        replyKeyboardMarkup.setOneTimeKeyboard(false);
-//        replyKeyboardMarkup.setResizeKeyboard(true);
-//
-//        KeyboardRow keyboardRow = new KeyboardRow();
-//        keyboardRow.add(BACK);
-//        keyboardRows.add(keyboardRow);
-//
-//        replyKeyboardMarkup.setKeyboard(keyboardRows);
-//        return sendMessage;
-//    }
-
-//    public static ReplyKeyboardMarkup history(){
-//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//        List<KeyboardRow> keyboardRows = new ArrayList<>();
-//        replyKeyboardMarkup.setKeyboard(keyboardRows);
-//        replyKeyboardMarkup.setResizeKeyboard(true);
-//
-//        KeyboardRow keyboardRow = new KeyboardRow();
-//        keyboardRow.add(BACK);
-//        keyboardRows.add(keyboardRow);
-//
-//        return replyKeyboardMarkup;
-//    }
 }
