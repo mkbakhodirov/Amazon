@@ -6,8 +6,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum BotState {
+    START1(0),
     START(1),
-    MY_CARDS(2);
+    BUY(2),
+    PAYMENT_TYPE(3),
+    BALANCE(4),
+    WEBPAGE(5),
+    HISTORY(6);
 
     BotState(int i) {
     }

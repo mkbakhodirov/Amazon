@@ -4,14 +4,13 @@ import bot.bot_replies.ReplyBot;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyBotService implements ReplyBot {
-
-    /* reply keyboardbutton ishlatilsin instead of keyboardrow*/
 
     public static InlineKeyboardMarkup getButtons(int numberOfButtons) {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
@@ -22,7 +21,7 @@ public class MyBotService implements ReplyBot {
 
         for (int i = 0; i < numberOfButtons; i++) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-            inlineKeyboardButton.setText((i + 1) + "");
+            inlineKeyboardButton.setText(BUTTON_WORDS[i]);
             inlineKeyboardButton.setCallbackData(String.valueOf(i));
             inlineKeyboardButtons.add(inlineKeyboardButton);
 
@@ -52,6 +51,30 @@ public class MyBotService implements ReplyBot {
         return replyKeyboardMarkup;
     }
 
+    public static ReplyKeyboardMarkup getContact(){
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(false);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+
+        KeyboardRow keyboardRow = new KeyboardRow();
+        KeyboardButton keyboardButton = new KeyboardButton();
+        KeyboardButton keyboardButton1 = new KeyboardButton();
+        keyboardButton.setText(SHARE_CONTACK);
+        keyboardButton1.setText(BACK);
+
+        keyboardRow.add(keyboardButton);
+        keyboardRow.add(keyboardButton1);
+        keyboardButton.setRequestContact(true);
+
+        keyboardRows.add(keyboardRow);
+
+        return replyKeyboardMarkup;
+    }
+
     public static ReplyKeyboardMarkup menu() {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         List<KeyboardRow> keyboardRows = new ArrayList<>();
@@ -72,9 +95,13 @@ public class MyBotService implements ReplyBot {
         keyboardRow2.add(WEBPAGE);
         keyboardRow2.add(HISTORY);
 
+        KeyboardRow keyboardRow3 = new KeyboardRow();
+        keyboardRow3.add(PURCHASES);
+
         keyboardRows.add(keyboardRow);
         keyboardRows.add(keyboardRow1);
         keyboardRows.add(keyboardRow2);
+        keyboardRows.add(keyboardRow3);
 
         return replyKeyboardMarkup;
     }
@@ -135,3 +162,18 @@ public class MyBotService implements ReplyBot {
         return replyKeyboardMarkup1;
     }
 }
+  //if(message.hasContact()){
+//    Contact contact = message.getConact();
+//    SendMessage sndmss = new SendMessage()
+//        .setText("Your number " + contact.getOhoneNumber()) // teng bo'lsa super admin bo'lsin
+//          .setChatId(messsage.getChatID());
+
+//        }
+//
+//message.hasLocation(){
+//    Location lc = new Location();
+//    Sendmessage = new
+//        .setText("Your loc" + lc.getLatitude() + lc.getLongtitude)
+// .setChatId(messsage.getChatID());
+//        }
+
