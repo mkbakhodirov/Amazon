@@ -1,6 +1,6 @@
 package model.user;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+import bot.bot_base.botLogic.BotState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,6 +17,7 @@ public class User extends BaseModel {
     private String password;
     private String username;
     private double balance;
+    private BotState botState;
 
     public User(UserRole role, String str, String password) {
         this.role = role;

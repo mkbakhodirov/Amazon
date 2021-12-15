@@ -1,6 +1,5 @@
 package bot.bot_base;
 
-import bot.bot_pictures.Pictures;
 import bot.bot_replies.ReplyBot;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 

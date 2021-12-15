@@ -1,11 +1,7 @@
 package ui;
 
-import Database.BaseUrl;
-import bot.MyBot;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import bot.bot_base.botLogic.MyBot;
 import model.Category;
-import model.Product;
 import model.response.Response;
 import model.user.User;
 import model.user.UserRole;
@@ -16,8 +12,6 @@ import service.CategoriesService;
 import service.ProductsService;
 import service.UsersService;
 
-import java.io.File;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 

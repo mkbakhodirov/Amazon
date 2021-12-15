@@ -1,15 +1,20 @@
-package service;
+package bot.bot_base.botLogic;
 
 import bot.bot_replies.ReplyBot;
 import model.Category;
 import model.PaymentType;
+import model.Product;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
+import service.CategoriesService;
+import service.ProductsService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MyBotService implements ReplyBot {
 
@@ -49,6 +54,8 @@ public class MyBotService implements ReplyBot {
         KeyboardRow keyboardRow1 = new KeyboardRow();
         keyboardRow1.add(PAYMENT_TYPE);
         keyboardRow1.add(BALANCE);
+        KeyboardButton button = new KeyboardButton();
+        button.setRequestContact(true);
 
         KeyboardRow keyboardRow2 = new KeyboardRow();
         keyboardRow2.add(WEBPAGE);
@@ -63,7 +70,7 @@ public class MyBotService implements ReplyBot {
 
     static CategoriesService categoriesService = new CategoriesService();
 
-    public static InlineKeyboardMarkup buymenu() {
+    public static InlineKeyboardMarkup buyMenu() {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
         List<List<InlineKeyboardButton>> list = new ArrayList<>();
         inlineKeyboardMarkup.setKeyboard(list);
@@ -74,7 +81,7 @@ public class MyBotService implements ReplyBot {
             for (int i = 0; i < parentCategoryList.size(); i++) {
                 InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
                 inlineKeyboardButton.setText(parentCategoryList.get(i).getName());
-                inlineKeyboardButton.setCallbackData(String.valueOf(i));
+                inlineKeyboardButton.setCallbackData("C" + parentCategoryList.get(i).getId());
                 inlineKeyboardButtons.add(inlineKeyboardButton);
 
                 if ((i + 1) % 3 == 0) {
@@ -118,5 +125,52 @@ public class MyBotService implements ReplyBot {
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
         return inlineKeyboardMarkup;
+    }
+
+    static Category category = new Category();
+    static ProductsService productsService = new ProductsService();
+
+    public static InlineKeyboardMarkup subcategoryMenu(String parentId) {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> list = new ArrayList<>();
+        inlineKeyboardMarkup.setKeyboard(list);
+
+        List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
+        Category parentCategory = categoriesService.getById(parentId); //
+        if (!parentCategory.isLastCategory()) {
+            List<Category> parentCategoryList = categoriesService.getList(parentCategory);
+            if (parentCategoryList != null)
+                for (int i = 0; i < parentCategoryList.size(); i++) {
+                    InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+                    if (parentId.equals(parentCategoryList.get(i).getParentId())) {
+                        inlineKeyboardButton.setText(parentCategoryList.get(i).getName());
+                        inlineKeyboardButton.setCallbackData("C" + parentCategoryList.get(i).getId());
+                        inlineKeyboardButtons.add(inlineKeyboardButton);
+
+                        if ((i + 1) % 3 == 0) {
+                            list.add(inlineKeyboardButtons);
+                            inlineKeyboardButtons = new ArrayList<>();
+                        } else if (i > parentCategoryList.size() - 3 && inlineKeyboardButtons != null)
+                            list.add(inlineKeyboardButtons);
+                    }
+                }
+        }else {
+            List<Product> productList = productsService.getList(parentCategory);
+            productMenu(productList);
+        }
+
+        return inlineKeyboardMarkup;
+
+    }
+
+    private static void productMenu(List<Product> productList) {
+    }
+
+    public static InlineKeyboardMarkup balance(String id) {
+        return null;
+    }
+
+    public static InlineKeyboardMarkup start() {
+return  null;
     }
 }

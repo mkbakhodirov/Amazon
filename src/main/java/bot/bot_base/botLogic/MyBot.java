@@ -1,7 +1,7 @@
-package bot;
+package bot.bot_base.botLogic;
 
 import bot.bot_base.TelegramBotUtils;
-import bot.bot_pictures.Pictures;
+import bot.bot_pictures.Base;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -11,11 +11,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import service.MyBotService;
 
 import java.io.File;
 
-public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, Pictures {
+public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, Base {
 
     private String chatId;
     private String message;
@@ -38,38 +37,69 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, P
     @SneakyThrows
     @Override
     public void onUpdateReceived(Update update) {
+        String data = "";
         this.chatId = update.getMessage().getChatId().toString();
+        BotState botState = null;
         if (update.hasMessage()) {
             String text = update.getMessage().getText();
             switch (text) {
-                case "/start" -> {
-                    this.message = START;
-                    execute(MyBotService.menu(), null, "");
+                case STARTBOT -> {
+                    botState = BotState.START;
                 }
                 case BUY -> {
-                    execute(null, MyBotService.buymenu(),CHOOSE);
+                    botState = BotState.BUY;
                 }
                 case PAYMENT_TYPE -> {
-                    execute(null, MyBotService.payType(), CHOOSE);
+                    botState = BotState.PAYMENT_TYPE;
                 }
                 case BALANCE -> {
-                    this.message = "running";
-                    sendPhoto();
+                    botState = BotState.BALANCE;
                 }
                 case HISTORY -> {
-                    execute(null, MyBotService.history(), READY);
+                    botState = BotState.HISTORY;
                 }
                 case WEBPAGE -> {
-                    execute(null, null, OPENING);
+                    botState = BotState.WEBPAGE;
                 }
+                default -> execute(null, null, INVALID_COMMAND);
             }
         } else if (update.hasCallbackQuery()) {
             this.chatId = update.getCallbackQuery().getMessage().getChatId().toString();
-            String data = update.getCallbackQuery().getData();
+           data = update.getCallbackQuery().getData();
 
-            switch (data) {
-                case "1" -> this.message = "Men ishlayapman";
+            if (isCategory(data)) {
+                botState = BotState.CATEGORY;
+            } else if (isProduct(data)) {
+                botState = BotState.PRODUCT;
+            } else if (data.equals(BACK)) {
+                botState = BotState.START;
+//                switch (botState) {
+//                    case BALANCE -> botState = BotState.START;
+//                    case HISTORY -> botState = BotState.START;
+//                    case WEBPAGE -> botState = BotState.START;
+//                    case BUY -> botState = BotState.START;
+//
+//                    case LAPTOPS -> botState = BotState.BUY;
+//                    case FOOD -> botState = BotState.BUY;
+//                    case THINGS_FOR_HOME -> botState = BotState.BUY;
+//                    case TECHNOLOGIES -> botState = BotState.BUY;
+//
+//                }
             }
+        }
+
+        switch (botState) {
+            case START -> execute(null, null, STARTHELLO);// break;
+            case BUY -> execute(null, MyBotService.buyMenu(), READY);// break;
+            case PAYMENT_TYPE -> execute(null, MyBotService.payType(), READY);// break;
+            //case CATEGORY -> ; break;
+            //case PRODUCT ->    ; break;
+            case HISTORY -> execute(null, MyBotService.history(), READY);// break;
+            case BALANCE -> execute(null, MyBotService.balance(data), READY);// break;
+            case WEBPAGE -> execute(null, null, WEBPAGE);// break;
+            default -> execute(null, null, INVALID_COMMAND);
+
+
         }
     }
 

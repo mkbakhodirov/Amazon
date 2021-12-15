@@ -70,10 +70,6 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
         return productsOfCategory;
     }
 
-    @Override
-    public List<Product> getList() {
-        return null;
-    }
 
     @Override
     public boolean isEmpty() {
@@ -119,4 +115,5 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
             }
         }
     }
+
 }

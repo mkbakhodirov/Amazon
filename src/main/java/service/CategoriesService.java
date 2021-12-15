@@ -92,5 +92,15 @@ public class CategoriesService implements BaseService<Category, Category, List<C
             return null;
         }
     }
+    public Category getById(String id){
+        List<Category> categories = read();
+        for (Category category : categories) {
+            String uuid = String.valueOf(category.getId());
+            if (uuid.equals(id))
+                return category;
+        }
+
+        return null;
+    }
 
 }
