@@ -10,7 +10,7 @@ public class BotMain {
 //        ApiContextInitializer.init();
         try{
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(new MyBot());
+            telegramBotsApi.registerBot(new bot.MyBot());
         }catch (TelegramApiRequestException e){
             e.printStackTrace();
         }

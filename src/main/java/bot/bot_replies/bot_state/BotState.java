@@ -13,7 +13,6 @@ public enum BotState {
     BALANCE(4),
     WEBPAGE(5),
     HISTORY(6);
+    int ordinal;
 
-    BotState(int i) {
-    }
 }
