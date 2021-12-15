@@ -14,7 +14,6 @@ import service.ProductsService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class MyBotService implements ReplyBot {
 
@@ -154,7 +153,7 @@ public class MyBotService implements ReplyBot {
                             list.add(inlineKeyboardButtons);
                     }
                 }
-        }else {
+        } else {
             List<Product> productList = productsService.getList(parentCategory);
             productMenu(productList);
         }
@@ -171,6 +170,6 @@ public class MyBotService implements ReplyBot {
     }
 
     public static InlineKeyboardMarkup start() {
-return  null;
+        return null;
     }
 }

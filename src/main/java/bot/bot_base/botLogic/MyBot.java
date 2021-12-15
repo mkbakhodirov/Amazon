@@ -44,8 +44,11 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
             String text = update.getMessage().getText();
             switch (text) {
                 case STARTBOT -> {
-                    botState = BotState.START;
+                    botState = BotState.STARTHELLO;
                 }
+//                case MENU -> {
+//                    botState = BotState.START;
+//                }
                 case BUY -> {
                     botState = BotState.BUY;
                 }
@@ -61,44 +64,42 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
                 case WEBPAGE -> {
                     botState = BotState.WEBPAGE;
                 }
-                default -> execute(null, null, INVALID_COMMAND);
+//                default -> execute(null, null, INVALID_COMMAND);
             }
         } else if (update.hasCallbackQuery()) {
             this.chatId = update.getCallbackQuery().getMessage().getChatId().toString();
-           data = update.getCallbackQuery().getData();
+            data = update.getCallbackQuery().getData();
 
             if (isCategory(data)) {
                 botState = BotState.CATEGORY;
             } else if (isProduct(data)) {
                 botState = BotState.PRODUCT;
             } else if (data.equals(BACK)) {
-                botState = BotState.START;
-//                switch (botState) {
-//                    case BALANCE -> botState = BotState.START;
-//                    case HISTORY -> botState = BotState.START;
-//                    case WEBPAGE -> botState = BotState.START;
-//                    case BUY -> botState = BotState.START;
-//
-//                    case LAPTOPS -> botState = BotState.BUY;
-//                    case FOOD -> botState = BotState.BUY;
-//                    case THINGS_FOR_HOME -> botState = BotState.BUY;
-//                    case TECHNOLOGIES -> botState = BotState.BUY;
-//
-//                }
+//                botState = BotState.START;
+                switch (botState) {
+                    case BALANCE -> botState = BotState.START;
+                    case HISTORY -> botState = BotState.START;
+                    case WEBPAGE -> botState = BotState.START;
+                    case BUY -> botState = BotState.START;
+                    case CATEGORY -> botState = BotState.START;
+                    case PRODUCT -> botState = BotState.SUBCATEGORY;
+                    case SUBCATEGORY -> botState = BotState.CATEGORY;
+                    case START -> botState = BotState.STARTHELLO;
+                }
             }
         }
-
         switch (botState) {
-            case START -> execute(null, null, STARTHELLO);
+            case STARTHELLO -> execute(MyBotService.menu(), null, STARTHELLO);
+            case START -> execute(MyBotService.menu(), null, null);
             case BUY -> execute(null, MyBotService.buyMenu(), READY);
             case PAYMENT_TYPE -> execute(null, MyBotService.payType(), READY);
+            case SUBCATEGORY -> execute(null, null, null);
             //case CATEGORY -> ;
             //case PRODUCT ->    ;
             case HISTORY -> execute(null, MyBotService.history(), READY);
             case BALANCE -> execute(null, MyBotService.balance(data), READY);
             case WEBPAGE -> execute(null, null, WEBPAGE);
             default -> execute(null, null, INVALID_COMMAND);
-
 
         }
     }
@@ -111,7 +112,6 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
 
         try {
             execute(sendMessage);
-//            this.message = "";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -130,3 +130,4 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
         }
     }
 }
+

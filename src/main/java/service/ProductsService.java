@@ -70,10 +70,20 @@ public class ProductsService implements BaseService<Product, Category, List<Prod
         return productsOfCategory;
     }
 
+    @Override
+    public List<Product> getList() {
+        return null;
+    }
+
 
     @Override
     public boolean isEmpty() {
         return false;
+    }
+
+    @Override
+    public void write(File file, List<Product> list) {
+        BaseService.super.write(file, list);
     }
 
     public List<Product> read() {
