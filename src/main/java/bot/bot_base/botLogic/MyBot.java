@@ -39,6 +39,7 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
     public void onUpdateReceived(Update update) {
         String data = "";
         this.chatId = update.getMessage().getChatId().toString();
+//        Contact contact = update.getMessage().getContact();
         BotState botState = null;
         if (update.hasMessage()) {
             String text = update.getMessage().getText();
@@ -89,8 +90,8 @@ public class MyBot extends TelegramLongPollingBot implements TelegramBotUtils, B
             }
         }
         switch (botState) {
-            case STARTHELLO -> execute(MyBotService.menu(), null, STARTHELLO);
-            case START -> execute(MyBotService.menu(), null, null);
+            case STARTHELLO -> execute(null, MyBotService.menu(), STARTHELLO);
+            case START -> execute(null, MyBotService.menu(), null);
             case BUY -> execute(null, MyBotService.buyMenu(), READY);
             case PAYMENT_TYPE -> execute(null, MyBotService.payType(), READY);
             case SUBCATEGORY -> execute(null, null, null);

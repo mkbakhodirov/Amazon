@@ -2,13 +2,9 @@ package bot.bot_base.botLogic;
 
 import bot.bot_replies.ReplyBot;
 import model.Category;
-import model.PaymentType;
 import model.Product;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import service.CategoriesService;
 import service.ProductsService;
 
@@ -38,33 +34,63 @@ public class MyBotService implements ReplyBot {
         return inlineKeyboardMarkup;
     }
 
-    public static ReplyKeyboardMarkup menu() {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
+    public static InlineKeyboardMarkup menu() {
+        InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> list = new ArrayList<>();
+        inlineKeyboardMarkup.setKeyboard(list);
 
-        replyKeyboardMarkup.setSelective(true);
-        replyKeyboardMarkup.setOneTimeKeyboard(false);
-        replyKeyboardMarkup.setResizeKeyboard(true);
+        List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
+        List<String> menu = new ArrayList<>();
+        menu.add(BUY);
+        menu.add(PAYMENT_TYPE);
+        menu.add(BALANCE);
+        menu.add(WEBPAGE);
+        menu.add(REGISTER);
+        menu.add(HISTORY);
+        menu.add(MY_CART);
 
-        KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add(BUY);
+        for (int i = 0; i < menu.size(); i++) {
+            InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
+            inlineKeyboardButton.setText(menu.get(i));
+            inlineKeyboardButton.setCallbackData(String.valueOf(menu.get(i)));
+            inlineKeyboardButtons.add(inlineKeyboardButton);
 
-        KeyboardRow keyboardRow1 = new KeyboardRow();
-        keyboardRow1.add(PAYMENT_TYPE);
-        keyboardRow1.add(BALANCE);
-        KeyboardButton button = new KeyboardButton();
-        button.setRequestContact(true);
 
-        KeyboardRow keyboardRow2 = new KeyboardRow();
-        keyboardRow2.add(WEBPAGE);
-        keyboardRow2.add(HISTORY);
+            if ((i + 1) % 3 == 0) {
+                list.add(inlineKeyboardButtons);
+                inlineKeyboardButtons = new ArrayList<>();
+            } else if (i > -3 && inlineKeyboardButtons != null)
+                list.add(inlineKeyboardButtons);
 
-        keyboardRows.add(keyboardRow);
-        keyboardRows.add(keyboardRow1);
-        keyboardRows.add(keyboardRow2);
 
-        return replyKeyboardMarkup;
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//        List<KeyboardRow> keyboardRows = new ArrayList<>();
+//        replyKeyboardMarkup.setKeyboard(keyboardRows);
+//
+//        replyKeyboardMarkup.setSelective(true);
+//        replyKeyboardMarkup.setOneTimeKeyboard(false);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//
+//        KeyboardRow keyboardRow = new KeyboardRow();
+//        keyboardRow.add(BUY);
+//
+//        KeyboardRow keyboardRow1 = new KeyboardRow();
+//        keyboardRow1.add(PAYMENT_TYPE);
+//        keyboardRow1.add(BALANCE);
+//        KeyboardButton button = new KeyboardButton();
+//        button.setRequestContact(true);
+//
+//        KeyboardRow keyboardRow2 = new KeyboardRow();
+//        keyboardRow2.add(WEBPAGE);
+//        keyboardRow2.add(HISTORY);
+//
+//        keyboardRows.add(keyboardRow);
+//        keyboardRows.add(keyboardRow1);
+//        keyboardRows.add(keyboardRow2);
+//
+//        return replyKeyboardMarkup;
+        }
+        return inlineKeyboardMarkup;
     }
 
     static CategoriesService categoriesService = new CategoriesService();
@@ -99,16 +125,16 @@ public class MyBotService implements ReplyBot {
 
         List<InlineKeyboardButton> inlineKeyboardButtons = new ArrayList<>();
 
-        List<PaymentType> paymentTypeList = new ArrayList<>();
-        paymentTypeList.add(PaymentType.PAY_ME);
-        paymentTypeList.add(PaymentType.VISA);
-        paymentTypeList.add(PaymentType.PAY_PAL);
-        paymentTypeList.add(PaymentType.MASTER_CARD);
-        paymentTypeList.add(PaymentType.CLICK);
+        List<String> paymentTypeList = new ArrayList<>();
+        paymentTypeList.add(PAY_ME);
+        paymentTypeList.add(VISA);
+        paymentTypeList.add(PAYPAL);
+        paymentTypeList.add(MASTER_CARD);
+        paymentTypeList.add(CLICK);
         for (int i = 0; i < paymentTypeList.size(); i++) {
             InlineKeyboardButton inlineKeyboardButton = new InlineKeyboardButton();
-            inlineKeyboardButton.setText(paymentTypeList.get(i).toString());
-            inlineKeyboardButton.setCallbackData(String.valueOf(i));
+            inlineKeyboardButton.setText(paymentTypeList.get(i));
+//            inlineKeyboardButton.setCallbackData(String.valueOf(i));
             inlineKeyboardButtons.add(inlineKeyboardButton);
 
             if (i % 2 == 0) {

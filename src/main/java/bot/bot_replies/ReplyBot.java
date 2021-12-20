@@ -13,6 +13,9 @@ public interface ReplyBot {
      String HISTORY = "\uD83D\uDC40 Histroy";
      String BACK = "\uD83D\uDD19 Back";
      String WEBPAGE = "\uD83D\uDD17 Our Website";
+     String REGISTER = "\uD83D\uDCBC Register";
+     String MY_CART = "\uD83D\uDC5C My cart";
+
 
           ///  buy menu
      String LAPTOPS = "\uD83D\uDCBB Laptops";
@@ -28,11 +31,13 @@ public interface ReplyBot {
      String MASTER_CARD = "\uD83D\uDCB5 Master Card";
      String VISA = "\uD83D\uDCB0 VISA";
 
+
      String READY = "READY";
      String CHOOSE = "CHOOSE";
      String OPENING = "OPENING";
      String PROCESSING = "PROCESSING";
      String INVALID_COMMAND = "INVALID COMMAND";
+
 
 
 
