@@ -1,10 +1,8 @@
 package service;
 
-import Database.BaseUrl;
+import database.BaseUrl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import model.Category;
 import model.Product;
 import model.history.HistoryShop;

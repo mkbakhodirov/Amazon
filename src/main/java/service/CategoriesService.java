@@ -1,10 +1,8 @@
 package service;
 
-import Database.BaseUrl;
+import database.BaseUrl;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import model.Category;
-import model.Product;
 import service.base.BaseService;
 
 import java.io.File;
@@ -12,95 +10,192 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class CategoriesService implements BaseService<Category, Category, List<Category>> {
+public class CategoriesService implements BaseService<Category, List<Category>> {
     static File file = new File(BaseUrl.url + "categories.json");
 
-    @Override
-    public String add(Category category) {
+    public String add(String name) {
         List<Category> categories = read();
-        if (categories == null)
-            categories = new ArrayList<>();
-        int res = check(category, categories);
-        if (res == 1) {
-            categories.add(category);
+        boolean isValidName = check(name, categories);
+        if (isValidName) {
+            Category category = new Category(name);
+            add(category, categories);
             write(file, categories);
             return SUCCESS;
         }
-        else if (res == -1)
-            return INVALID_CATEGORY;
-        return null;
+        return "Invalid name";
     }
 
-    @Override
-    public String remove(Category category) {
-return null;
+    public String add(String name, String parentUUID) {
+        UUID parentId = UUID.fromString(parentUUID);
+        return add(name, parentId);
     }
 
-    @Override
-    public int check(Category category, List<Category> categories) {
-        String name = category.getName();
-        for (Category category1 : categories) {
-            if (category1.getName().equals(name))
-                return -1;
-            if (category1.equals(category))
-                return 0;
-        }
-        return 1;
-    }
-
-    @Override
-    public Category getByIndex(int index) {
-        return null;
-    }
-
-    @Override
-    public List<Category> getList(Category category) {
-        UUID categoryId = category.getId();
+    public String add(String name, UUID parentId) {
         List<Category> categories = read();
-        List<Category> subCategories = new ArrayList<>();
-        if (categories != null) {
-            for (Category category1 : categories) {
-                if (category1.getParentId() != null && category1.getParentId().equals(categoryId))
-                    subCategories.add(category1);
+        boolean isValidName = check(name, categories);
+        if (isValidName) {
+            Category category = new Category(name, parentId);
+            add(category, categories);
+            write(file, categories);
+            return "Success";
+        }
+        return "Invalid name";
+    }
+
+    @Override
+    public void add(Category category, List<Category> categories) {
+        categories.add(category);
+        UUID parentId = category.getParentId();
+        if (parentId != null) {
+            Category parentCategory = get(category.getParentId(), categories);
+            parentCategory.setLastSubcategory(false);
+        }
+    }
+
+    @Override
+    public String remove(String uuid) {
+        UUID id = UUID.fromString(uuid);
+        return remove(id);
+    }
+
+    @Override
+    public String remove(UUID id) {
+        List<Category> categories = read();
+        Category category = get(id, categories);
+        boolean isSuccess = remove(category, categories);
+        if (isSuccess) {
+            write(file, categories);
+            return "Success";
+        }
+        return "Category was removed early";
+    }
+
+    @Override
+    public boolean remove(Category category, List<Category> categories) {
+        if (category.isActive()) {
+            category.setActive(false);
+            List<Category> subcategories = getSubcategories(category.getParentId(), categories);
+            if (subcategories.isEmpty()) {
+                System.out.println(123);
+                Category parentCategory = get(category.getParentId(), categories);
+                parentCategory.setLastSubcategory(true);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public String editName(String uuid, String name) {
+        UUID id = UUID.fromString(uuid);
+        return editName(id, name);
+    }
+
+    public String editName(UUID id, String name) {
+        List<Category> categories = read();
+        Category category = get(id, categories);
+        boolean isSuccess = editName(category, name);
+        if (isSuccess) {
+            write(file, categories);
+            return "Success";
+        }
+        return "The new name is the same as current name";
+    }
+
+    public boolean editName(Category category, String name) {
+        if (category.getName().equals(name))
+            return false;
+        category.setName(name);
+        return true;
+    }
+
+    @Override
+    public boolean check(String name, List<Category> categories) {
+        for (Category category : categories) {
+            if (category.isActive() && category.getName().equals(name)) {
+                return false;
             }
         }
-        return subCategories;
+        return true;
     }
 
     @Override
-    public List<Category> getList() {
+    public Category get(String uuid) {
+        UUID id = UUID.fromString(uuid);
+        return get(id);
+    }
+
+    @Override
+    public Category get(UUID id) {
+        List<Category> categories = read();
+        for (Category category : categories) {
+            if (category.getId().equals(id))
+                return category;
+        }
+        return null;
+    }
+
+    Muzaffar, [15.12.2021 20:38]
+    @Override
+    public Category get(UUID id, List<Category> categories) {
+        for (Category category : categories) {
+            if (category.getId().equals(id))
+                return category;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Category> read() {
+        try {
+            return obj.readValue(file, new TypeReference<>() {});
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<Category> getActiveList() {
+        List<Category> categories = getList();
+        List<Category> activeCategories = new ArrayList<>();
+        for (Category category : categories) {
+            if (category.isActive())
+                activeCategories.add(category);
+        }
+        return activeCategories;
+    }
+
+    public List<Category> getMainCategories() {
         List<Category> categories = read();
         List<Category> mainCategories = new ArrayList<>();
-        if (categories != null) {
-            for (Category category : categories) {
-                if (category.getParentId() == null)
-                    mainCategories.add(category);
+        for (Category category : categories) {
+            if (category.isActive() && category.getParentId() == null) {
+                mainCategories.add(category);
             }
         }
         return mainCategories;
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
+    public List<Category> getSubcategories(String parentUUID) {
+        UUID parentId = UUID.fromString(parentUUID);
+        return getSubcategories(parentId);
     }
 
-    public List<Category> read() {
-        try {
-            return new ObjectMapper().readValue(file, new TypeReference<>() {});
-        } catch (Exception e) {
-            return null;
-        }
-    }
-    public Category getById(String id){
+    public List<Category> getSubcategories(UUID parentId) {
         List<Category> categories = read();
+        List<Category> subcategories = new ArrayList<>();
         for (Category category : categories) {
-            String uuid = String.valueOf(category.getId());
-            if (uuid.equals(id))
-                return category;
+            if (category.isActive() && category.getParentId() != null && category.getParentId().equals(parentId))
+                subcategories.add(category);
         }
-
-        return null;
+        return subcategories;
     }
 
+    public List<Category> getSubcategories(UUID parentId, List<Category> categories) {
+        List<Category> subcategories = new ArrayList<>();
+        for (Category category : categories) {
+            if (category.isActive() && category.getParentId() != null && category.getParentId().equals(parentId))
+                subcategories.add(category);
+        }
+        return subcategories;
+    }
 }

@@ -9,24 +9,23 @@ import model.base.BaseModel;
 
 import java.util.UUID;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@Data
 public class Category extends BaseModel {
     private UUID parentId;
-    private boolean isLastCategory;
+    private boolean isLastSubcategory;
 
     {
-        isLastCategory = true;
-    }
-
-    public Category(String name) {
-        super(name);
+        isLastSubcategory = true;
     }
 
     public Category(String name, UUID parentId) {
         super(name);
         this.parentId = parentId;
+    }
+
+    public Category(String name) {
+        super(name);
     }
 }

@@ -24,13 +24,6 @@ public class HomeUI implements Response {
     static ProductsService productsService = new ProductsService();
 
     public static void home() throws Exception {
-        try {
-            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(new MyBot());
-        } catch (TelegramApiRequestException e) {
-            e.printStackTrace();
-        }
-
         boolean stepcode = true;
         while (stepcode) {
             System.out.println(SELECT);
@@ -57,7 +50,8 @@ public class HomeUI implements Response {
                 superAdminUI(admin);
             else if (admin.getRole().equals(UserRole.ADMIN))
                 adminUI(admin);
-        } else
+        }
+        else
             System.out.println(INCORRECT_ADMIN);
     }
 
@@ -87,14 +81,13 @@ public class HomeUI implements Response {
         String username = scannerStr.next();
         System.out.println(ENTER_PASSWORD);
         String password = scannerStr.next();
-        User admin = new User(UserRole.ADMIN, username, password);
-        String res = usersService.add(admin);
+        String res = usersService.add(UserRole.ADMIN, username, password);
         if (res != null)
             System.out.println(res);
     }
 
     private static void removeAdmin() {
-        List<User> admins = usersService.getActiveAdminsList();
+        List<User> admins = usersService.getActiveAdmins();
         if (admins.isEmpty())
             System.out.println(EMPTY_LIST);
         else {
@@ -104,8 +97,12 @@ public class HomeUI implements Response {
                 System.out.println(index++ + "." + admin.getUsername());
             }
             index = scannerInt.nextInt();
-            User admin = admins.get(index - 1);
-            System.out.println(usersService.remove(admin));
+            if (index < 1 || index > admins.size())
+                System.out.println(INVALID_COMMAND);
+            else {
+                User admin = admins.get(index - 1);
+                System.out.println(usersService.remove(admin));
+            }
         }
     }
 

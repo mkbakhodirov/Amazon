@@ -1,38 +1,41 @@
 package model.user;
 
-import bot.bot_base.botLogic.BotState;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import model.base.BaseModel;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 public class User extends BaseModel {
     private UserRole role;
     private String phoneNumber;
-    private String password;
+    private String chatId;
     private String username;
+    private String password;
     private double balance;
-    private BotState botState;
 
-    public User(UserRole role, String str, String password) {
+    public User(UserRole role, String name, String chatId, String username, String password) {
+        super(name);
         this.role = role;
-        if (role.equals(UserRole.USER))
-            this.phoneNumber = str;
-        else
-            this.username = str;
+        this.chatId = chatId;
+        this.username = username;
         this.password = password;
     }
 
-    public User(String name, UserRole role, String phoneNumber, String password, String username) {
+
+
+    public User(String name, UserRole role, String phoneNumber, String chatId) {
         super(name);
         this.role = role;
         this.phoneNumber = phoneNumber;
-        this.password = password;
+        this.chatId = chatId;
+    }
+
+    public User(UserRole role, String username, String password) {
+        this.role = role;
         this.username = username;
+        this.password = password;
     }
 }
