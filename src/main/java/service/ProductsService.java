@@ -1,10 +1,12 @@
 package service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import database.BaseUrl;
 import model.Product;
 import service.base.BaseService;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -104,15 +106,19 @@ public class ProductsService implements BaseService<Product, List<Product>> {
         Product product = get(id, products);
         if (product != null) {
             boolean isSuccess = editName(product, name);
-
+            if (isSuccess)
+                return SUCCESS;
+            else
+                return SAME_NAME;
         }
         return NOT_FOUND;
     }
 
     @Override
     public boolean editName(Product product, String name) {
-       product.setName(name);
-
+        if (product.getName().equals(name))
+            return false;
+        product.setName(name);
         return true;
     }
 
@@ -127,26 +133,49 @@ public class ProductsService implements BaseService<Product, List<Product>> {
 
     @Override
     public Product get(String uuid) {
-        return null;
+        UUID id = UUID.fromString(uuid);
+        return get(id);
     }
 
     @Override
     public Product get(UUID id) {
-        return null;
+        List<Product> products = getList();
+        return get(id, products);
     }
 
     @Override
-    public Product get(UUID id, List<Product> list) {
+    public Product get(UUID id, List<Product> products) {
+        for (Product product : products) {
+            if (product.getId().equals(id))
+                return product;
+        }
         return null;
     }
 
     @Override
     public List<Product> read() {
-        return null;
+        try {
+            return obj.readValue(file, new TypeReference<>() {
+            });
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public List<Product> getActiveList() {
-        return null;
+        List<Product> activeProducts = new ArrayList<>();
+        for (Product product : getList())
+            if (product.isActive())
+                activeProducts.add(product);
+        return activeProducts;
+    }
+
+    public List<Product> getProducts(String categoryId) {
+        List<Product> products = new ArrayList<>();
+        for (Product product : getActiveList())
+            if (product.getCategoryId().equals(categoryId))
+                products.add(product);
+        return products;
     }
 }

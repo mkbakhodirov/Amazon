@@ -2,13 +2,10 @@ package service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import database.BaseUrl;
-import model.Product;
 import model.user.User;
 import model.user.UserRole;
 import service.base.BaseService;
 
-import javax.swing.event.ListDataEvent;
-import javax.ws.rs.PUT;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
