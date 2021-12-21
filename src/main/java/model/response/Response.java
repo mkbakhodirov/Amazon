@@ -2,8 +2,10 @@ package model.response;
 
 public interface Response {
     String SUCCESS = "SUCCESS";
+    String SAME_NAME = "SAME_NAME";
     String CAN_LOGIN = "================ YOU = CAN = LOGIN = NOW ================";
     String NOT_FOUND = "NOT FOUND";
+    String PRODUCT_ALREADY_REMOVED = "PRODUCT ALREADY REMOVED";
     String AVAILABLE = "AVAILABLE";
     String NOT_AVAILABLE = "NOT AVAILABLE";
     String PHONE_BEGINNING = "+998 ";

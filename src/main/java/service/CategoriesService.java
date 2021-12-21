@@ -96,9 +96,9 @@ public class CategoriesService implements BaseService<Category, List<Category>> 
         boolean isSuccess = editName(category, name);
         if (isSuccess) {
             write(file, categories);
-            return "Success";
+            return SUCCESS;
         }
-        return "The new name is the same as current name";
+        return SAME_NAME;
     }
 
     public boolean editName(Category category, String name) {

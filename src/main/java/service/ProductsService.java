@@ -1,17 +1,10 @@
 package service;
 
 import database.BaseUrl;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import model.Category;
 import model.Product;
-import model.history.HistoryShop;
-import model.history.HistoryUser;
-import model.user.User;
 import service.base.BaseService;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,7 +76,8 @@ public class ProductsService implements BaseService<Product, List<Product>> {
             if (isSuccess) {
                 write(file, products);
                 return SUCCESS;
-            }
+            } else
+                return PRODUCT_ALREADY_REMOVED;
         }
 
         return NOT_FOUND;
@@ -100,17 +94,26 @@ public class ProductsService implements BaseService<Product, List<Product>> {
 
     @Override
     public String editName(String uuid, String name) {
-        return null;
+        UUID id = UUID.fromString(uuid);
+        return editName(id, name);
     }
 
     @Override
     public String editName(UUID id, String name) {
-        return null;
+        List<Product> products = getList();
+        Product product = get(id, products);
+        if (product != null) {
+            boolean isSuccess = editName(product, name);
+
+        }
+        return NOT_FOUND;
     }
 
     @Override
     public boolean editName(Product product, String name) {
-        return false;
+       product.setName(name);
+
+        return true;
     }
 
     @Override

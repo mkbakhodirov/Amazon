@@ -2,10 +2,13 @@ package service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import database.BaseUrl;
+import model.Product;
 import model.user.User;
 import model.user.UserRole;
 import service.base.BaseService;
 
+import javax.swing.event.ListDataEvent;
+import javax.ws.rs.PUT;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +37,7 @@ public class UsersService implements BaseService<User, List<User>> {
             add(admin, users);
             write(file, users);
             return SUCCESS;
-        }
-        else {
+        } else {
             if (role.equals(UserRole.ADMIN))
                 return INVALID_USERNAME;
         }
@@ -67,7 +69,8 @@ public class UsersService implements BaseService<User, List<User>> {
     @Override
     public List<User> read() {
         try {
-            return obj.readValue(file, new TypeReference<>() {});
+            return obj.readValue(file, new TypeReference<>() {
+            });
         } catch (Exception e) {
             return new ArrayList<>();
         }
@@ -88,8 +91,7 @@ public class UsersService implements BaseService<User, List<User>> {
             if (isSuccess) {
                 write(file, users);
                 return SUCCESS;
-            }
-            else
+            } else
                 return "This user was already removed";
         }
         return "User is not found";
@@ -144,6 +146,15 @@ public class UsersService implements BaseService<User, List<User>> {
         List<User> users = read();
         for (User user : users) {
             if (user.isActive() && user.getUsername().equals(username) && user.getPassword().equals(password))
+                return user;
+        }
+        return null;
+    }
+
+    public User getByChatId(String chatId) {
+        List<User> users = getUsers();
+        for (User user : users) {
+            if (user.getChatId().equals(chatId))
                 return user;
         }
         return null;
