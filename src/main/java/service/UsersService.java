@@ -151,8 +151,17 @@ public class UsersService implements BaseService<User, List<User>> {
         return null;
     }
 
-    public User getByChatId(String chatId) {
+    public User getUserByChatId(String chatId) {
         List<User> users = getUsers();
+        for (User user : users) {
+            if (user.getChatId().equals(chatId))
+                return user;
+        }
+        return null;
+    }
+
+    public User getActiveUserByChatId(String chatId) {
+        List<User> users = getActiveUsers();
         for (User user : users) {
             if (user.getChatId().equals(chatId))
                 return user;
