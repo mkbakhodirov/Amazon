@@ -37,7 +37,7 @@ public class UsersService implements BaseService<User, List<User>> {
         }
         else {
             if (role.equals(UserRole.ADMIN))
-                return INVALID_USERNAME
+                return INVALID_USERNAME;
         }
         return null;
     }
@@ -99,7 +99,7 @@ public class UsersService implements BaseService<User, List<User>> {
     public boolean remove(User user, List<User> users) {
         if (user.isActive()) {
             user.setActive(false);
-            return true
+            return true;
         }
         return false;
     }

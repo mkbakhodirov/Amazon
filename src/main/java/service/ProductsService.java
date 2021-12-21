@@ -57,7 +57,10 @@ public class ProductsService implements BaseService<Product, List<Product>> {
         if (isValidName) {
             Product product = new Product(name, price, amount, userId, categoryId);
             add(product, products);
+            write(file, products);
+            return SUCCESS;
         }
+        return INVALID_PRODUCT;
     }
 
     @Override
@@ -67,16 +70,31 @@ public class ProductsService implements BaseService<Product, List<Product>> {
 
     @Override
     public String remove(String uuid) {
-        return null;
+        UUID id = UUID.fromString(uuid);
+        return remove(id);
     }
 
     @Override
     public String remove(UUID id) {
-        return null;
+        List<Product> products = getList();
+        Product product = get(id, products);
+        if (product != null) {
+            boolean isSuccess = remove(product, products);
+            if (isSuccess) {
+                write(file, products);
+                return SUCCESS;
+            }
+        }
+
+        return NOT_FOUND;
     }
 
     @Override
-    public boolean remove(Product product, List<Product> list) {
+    public boolean remove(Product product, List<Product> products) {
+        if (product.isActive()) {
+            product.setActive(false);
+            return true;
+        }
         return false;
     }
 
