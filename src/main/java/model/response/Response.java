@@ -29,4 +29,5 @@ public interface Response {
     String INVALID_CATEGORY = "THERE IS ALREADY CATEGORY WITH THIS NAME";
     String INCORRECT_ADMIN = "Username or password is incorrect";
     String EMPTY_LIST = "List is empty";
+    String ENTER_INDEX = "Enter index";
 }

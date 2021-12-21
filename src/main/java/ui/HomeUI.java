@@ -14,6 +14,7 @@ import service.UsersService;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class HomeUI implements Response {
     static Scanner scannerStr = new Scanner(System.in);
@@ -70,6 +71,7 @@ public class HomeUI implements Response {
                 case 1 -> addAdmin();
                 case 2 -> removeAdmin();
                 case 3 -> seeAdmins();
+                case 4 -> System.out.println("Balance: " + superAdmin.getBalance());
                 case 0 -> stepcode = false;
                 default -> System.out.println(INVALID_COMMAND);
             }
@@ -82,8 +84,7 @@ public class HomeUI implements Response {
         System.out.println(ENTER_PASSWORD);
         String password = scannerStr.next();
         String res = usersService.add(UserRole.ADMIN, username, password);
-        if (res != null)
-            System.out.println(res);
+        System.out.println(res);
     }
 
     private static void removeAdmin() {
@@ -101,13 +102,13 @@ public class HomeUI implements Response {
                 System.out.println(INVALID_COMMAND);
             else {
                 User admin = admins.get(index - 1);
-                System.out.println(usersService.remove(admin));
+                System.out.println(usersService.remove(admin.getId()));
             }
         }
     }
 
     private static void seeAdmins() {
-        List<User> admins = usersService.getAdminsList();
+        List<User> admins = usersService.getAdmins();
         if (admins.isEmpty())
             System.out.println(EMPTY_LIST);
         else {
@@ -126,15 +127,15 @@ public class HomeUI implements Response {
             System.out.println("""
                     1.Add category
                     2.Remove category
-                    3.See categories
-                    4.See shops
-                    5.Remove shop
+                    3.See users
+                    4.Remove user
                     0.Exit
                     """);
             switch (scannerInt.nextInt()) {
                 case 1 -> addCategory();
-                case 2 -> removeAdmin();
-                case 3 -> seeAdmins();
+                case 2 -> removeCategory();
+                case 3 -> seeUsers();
+                case 4 -> removeUser();
                 case 0 -> stepcode = false;
                 default -> System.out.println(INVALID_COMMAND);
             }
@@ -144,7 +145,7 @@ public class HomeUI implements Response {
     private static void addCategory() {
         boolean stepCode = true;
         while (stepCode) {
-            List<Category> categories = categoriesService.getList();
+            List<Category> categories = categoriesService.getMainCategories();
             int index = 1;
             System.out.println(SELECT);
             for (Category category : categories) {
@@ -155,42 +156,125 @@ public class HomeUI implements Response {
             if (index1 == index) {
                 System.out.println(ENTER_NAME);
                 String name = scannerLine.nextLine();
-                Category category = new Category(name);
-                String res = categoriesService.add(category);
-                if (res != null)
-                    System.out.println(res);
-            } else if (index1 == 0)
-                stepCode = false;
-            else {
-                Category category = categories.get(index1 - 1);
-                addSubcategory(category);
+                String res = categoriesService.add(name);
+                System.out.println(res);
             }
+            else if (index1 == 0)
+                stepCode = false;
+            else if (index1 > 0 && index1 <= index - 1) {
+                Category category = categories.get(index1 - 1);
+                addSubcategory(category.getId());
+            }
+            else
+                System.out.println(INVALID_COMMAND);
         }
     }
 
-    private static void addSubcategory(Category category) {
-        List<Category> categories = categoriesService.getList(category);
+    private static void addSubcategory(UUID parentCategoryId) {
+        List<Category> categories = categoriesService.getSubcategories(parentCategoryId);
         int index = 1;
         System.out.println(SELECT);
-        for (Category category1 : categories) {
-            System.out.println(index++ + "." + category1.getName());
+        for (Category category : categories) {
+            System.out.println(index++ + "." + category.getName());
         }
         System.out.println(index + ".Add\t 0.Exit");
         int index1 = scannerInt.nextInt();
         if (index1 == index) {
             System.out.println(ENTER_NAME);
             String name = scannerLine.nextLine();
-            Category category1 = new Category(name, category.getId());
-            String res = categoriesService.add(category1);
-            if (res != null) {
-                System.out.println(res);
-                if (category.isLastCategory())
-                    category.setLastCategory(false);
+            String res = categoriesService.add(name, parentCategoryId);
+            System.out.println(res);
+        }
+        else if (index1 > 0 && index1 <= index - 1) {
+            Category category = categories.get(index1 - 1);
+            addSubcategory(category.getId());
+        }
+        else if (index1 != 0)
+            System.out.println(INVALID_COMMAND);
+    }
+
+    private static void removeCategory() {
+        boolean stepCode = true;
+        while (stepCode) {
+            List<Category> categories = categoriesService.getMainCategories();
+            int index = 1;
+            if (categories.isEmpty()) {
+                System.out.println(EMPTY_LIST);
+                return;
             }
-        } else if (index1 != 0) {
-            Category category1 = categories.get(index1 - 1);
-            addSubcategory(category1);
+            System.out.println(SELECT);
+            for (Category category : categories) {
+                System.out.println(index++ + "." + category.getName());
+            }
+            System.out.println(index + ".Remove\t 0.Exit");
+            int index1 = scannerInt.nextInt();
+            if (index1 == index) {
+                System.out.println(ENTER_INDEX);
+                index1 = scannerInt.nextInt();
+                if (index1 > 0 && index1 <= index - 1) {
+                    Category category = categories.get(index1 - 1);
+                    String res = categoriesService.remove(category.getId());
+                    System.out.println(res);
+                }
+                else
+                    System.out.println(INVALID_COMMAND);
+            }
+            else if (index1 == 0)
+                stepCode = false;
+            else if (index1 > 0 && index1 <= index - 1) {
+                Category category = categories.get(index1 - 1);
+                removeSubcategory(category.getId());
+            }
+            else
+                System.out.println(INVALID_COMMAND);
         }
     }
 
+    private static void removeSubcategory(UUID parentCategoryId) {
+        List<Category> categories = categoriesService.getSubcategories(parentCategoryId);
+        int index = 1;
+        if (categories.isEmpty()) {
+            System.out.println(EMPTY_LIST);
+            return;
+        }
+        System.out.println(SELECT);
+        for (Category category : categories) {
+            System.out.println(index++ + "." + category.getName());
+        }
+        System.out.println(index + ".Remove\t 0.Exit");
+        int index1 = scannerInt.nextInt();
+        if (index1 == index) {
+            System.out.println(ENTER_INDEX);
+            index1 = scannerInt.nextInt();
+            if (index1 > 0 && index1 <= index - 1) {
+                Category category = categories.get(index1 - 1);
+                String res = categoriesService.remove(category.getId());
+                System.out.println(res);
+            }
+            else
+                System.out.println(INVALID_COMMAND);
+        }
+        else if (index1 > 0 && index1 <= index - 1) {
+            Category category = categories.get(index1 - 1);
+            removeSubcategory(category.getId());
+        }
+        else if (index1 != 0)
+            System.out.println(INVALID_COMMAND);
+    }
+
+    private static void seeUsers() {
+        List<User> users = usersService.getUsers();
+        if (users.isEmpty()) {
+            System.out.println(EMPTY_LIST);
+        }
+        for (User user : users) {
+            System.out.println("ID: " + user.getId() + " ChatId: " + user.getChatId() + " Active: " + user.isActive());
+        }
+    }
+
+    private static void removeUser() {
+        String uuid = scannerStr.next();
+        String res = usersService.remove(uuid);
+        System.out.println(res);
+    }
 }

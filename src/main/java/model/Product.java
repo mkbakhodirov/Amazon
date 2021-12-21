@@ -20,14 +20,16 @@ import java.util.UUID;
 public class Product extends BaseModel {
     private double price;
     private int amount;
-    private UUID shopId;
+    private UUID userId;
     private UUID categoryId;
+    private int likeCounts;
+    private int dislikeCounts;
 
-    public Product(String name, double price, int amount, UUID shopId, UUID categoryId) {
+    public Product(String name, double price, int amount, UUID userId, UUID categoryId) {
         super(name);
         this.price = price;
         this.amount = amount;
-        this.shopId = shopId;
+        this.userId = userId;
         this.categoryId = categoryId;
     }
 }

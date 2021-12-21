@@ -16,16 +16,6 @@ public class User extends BaseModel {
     private String password;
     private double balance;
 
-    public User(UserRole role, String name, String chatId, String username, String password) {
-        super(name);
-        this.role = role;
-        this.chatId = chatId;
-        this.username = username;
-        this.password = password;
-    }
-
-
-
     public User(String name, UserRole role, String phoneNumber, String chatId) {
         super(name);
         this.role = role;

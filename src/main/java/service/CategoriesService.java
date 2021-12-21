@@ -134,7 +134,6 @@ public class CategoriesService implements BaseService<Category, List<Category>> 
         return null;
     }
 
-    Muzaffar, [15.12.2021 20:38]
     @Override
     public Category get(UUID id, List<Category> categories) {
         for (Category category : categories) {
@@ -155,9 +154,8 @@ public class CategoriesService implements BaseService<Category, List<Category>> 
 
     @Override
     public List<Category> getActiveList() {
-        List<Category> categories = getList();
         List<Category> activeCategories = new ArrayList<>();
-        for (Category category : categories) {
+        for (Category category : getList()) {
             if (category.isActive())
                 activeCategories.add(category);
         }
